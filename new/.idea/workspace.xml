@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c83a5cc4-7342-4dd6-a9ba-c431acf474a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/htmlfx/Scene1Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/htmlfx/Scene2Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/htmlfx/Scene1.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/htmlfx/Scene2.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OASIS/Account.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OASIS/src/Solution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../OASIS/src/Transaction.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../WEEK4/src/test/java/Week4Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/FivePerLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/FunctionGrowth.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/HW1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/HelloWorld.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/RollLoadedDie.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/TenHellos.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW1/allequal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/Appearances.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/CharGrid.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/Point.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/Shape.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/StringCode.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/Taboo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/main/java/TetrisGrid.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/AppearancesTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/CharGridTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/PointTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/StringCodeTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/TabooTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW2/src/test/java/TetrisGridTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/BadBrain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/Brain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/DefaultBrain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/JTetris.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/Piece.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/main/java/TPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/test/java/BoardTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/HW3/src/test/java/PieceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../oop-main/README.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2nMT9g0x5i1KRarVrkaO0PxI6kq" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.SignUpTransition.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/OOP/OOP/HtmlFX/src/main/java/org/example/htmlfx",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.JavaFX",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\OOP\OOP\HtmlFX\src\main\java\org\example\htmlfx" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\OOP\OOP\HtmlFX\src\main\resources\org\example\htmlfx" />
+      <recent name="D:\OOP\OOP\HtmlFX\src\main\resources" />
+      <recent name="D:\OOP\OOP\HtmlFX\src\main\java\org\example\htmlfx" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c83a5cc4-7342-4dd6-a9ba-c431acf474a6" name="Changes" comment="" />
+      <created>1728781797359</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1728781797359</updated>
+      <workItem from="1728781798443" duration="43246000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
