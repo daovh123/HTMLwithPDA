@@ -8,11 +8,10 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 public class HelloApplication extends Application {
-    private SceneController sceneController;
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Scene.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Add_user.fxml"));
         Scene scene = new Scene(root);  // Đặt kích thước cửa sổ
         stage.setScene(scene);
         stage.show();
