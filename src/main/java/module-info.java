@@ -6,6 +6,8 @@ module org.example.htmlfx {
     requires com.dlsc.formsfx;
     requires com.almasb.fxgl.all;
     requires java.desktop;
+    requires java.sql;
+    requires mysql.connector.j;
 
     opens org.example.htmlfx to javafx.fxml;
     exports org.example.htmlfx;
