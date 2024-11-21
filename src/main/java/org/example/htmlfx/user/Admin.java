@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.user;
 
 public class Admin {
     private String password;

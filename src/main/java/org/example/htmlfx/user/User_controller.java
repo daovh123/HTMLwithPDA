@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.user;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.example.htmlfx.DatabaseConnection;
+import org.example.htmlfx.SwitchScene;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -107,7 +109,7 @@ public class User_controller {
 
     public void addUser(ActionEvent event) {
         SwitchScene sw = new SwitchScene();
-        sw.switchScene(event, "User_Add.fxml");
+        sw.switchScene(event, "user/User_Add.fxml");
     }
 
     public void deleteUser() {

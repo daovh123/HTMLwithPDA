@@ -1,10 +1,12 @@
-package org.example.htmlfx;
+package org.example.htmlfx.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import org.example.htmlfx.DatabaseConnection;
+import org.example.htmlfx.SwitchScene;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,8 +45,8 @@ public class User_Add {
         String insertUserSQL = "INSERT INTO members (username, firstname, lastname, phone, email) " +
                                 "VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
-            PreparedStatement checkUserStatement = connection.prepareStatement(checkUserSQL);
-            PreparedStatement insertUserStatement = connection.prepareStatement(insertUserSQL)) {
+             PreparedStatement checkUserStatement = connection.prepareStatement(checkUserSQL);
+             PreparedStatement insertUserStatement = connection.prepareStatement(insertUserSQL)) {
                 checkUserStatement.setString(1, username.getText());
                 ResultSet resultSet = checkUserStatement.executeQuery();
                 resultSet.next();

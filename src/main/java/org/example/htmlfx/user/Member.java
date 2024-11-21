@@ -1,9 +1,11 @@
-package org.example.htmlfx;
+package org.example.htmlfx.user;
+
+import org.example.htmlfx.book.BookItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Member extends Users{
+public class Member extends Users {
     private int totalBooksCheckedOut = 0;
     private List<BookItem> listBorrowed = new ArrayList<>();
 

@@ -11,7 +11,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Users.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("user/Users.fxml"));
         Scene scene = new Scene(root);  // Đặt kích thước cửa sổ
         stage.setScene(scene);
         stage.show();

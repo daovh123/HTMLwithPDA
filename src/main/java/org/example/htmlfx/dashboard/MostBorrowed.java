@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.dashboard;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

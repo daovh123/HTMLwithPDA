@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleCardClick" prefHeight="185.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.book.CardController">
+   <children>
+      <ImageView fx:id="imageBook" fitHeight="183.0" fitWidth="155.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox prefHeight="185.0" prefWidth="260.0">
+         <children>
+            <Label fx:id="nameBook" prefHeight="74.0" prefWidth="572.0" text="Name" />
+            <Label fx:id="author" prefHeight="74.0" prefWidth="572.0" text="Author" />
+            <Label fx:id="borrowtimes" prefHeight="74.0" prefWidth="572.0" text="Borrowed Times" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
