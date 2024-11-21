@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.book.BookController">
+   <children>
+      <BorderPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="873.0" prefWidth="1315.0">
+         <left>
+            <VBox prefHeight="807.0" prefWidth="183.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="29.0" prefWidth="195.0" text="Browse" />
+                  <HBox prefHeight="53.0" prefWidth="195.0">
+                     <children>
+                        <Label prefHeight="55.0" prefWidth="195.0" text="Top Books" />
+                     </children>
+                  </HBox>
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Browse" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Catrgories" />
+                  <Separator prefWidth="200.0" />
+                  <Label prefHeight="29.0" prefWidth="195.0" text="Book" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+                  <Separator prefWidth="200.0" />
+                  <Label prefHeight="29.0" prefWidth="195.0" text="Shelves" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+                  <Label prefHeight="55.0" prefWidth="195.0" text="Label" />
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox prefHeight="760.0" prefWidth="1102.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="163.0" text="Recently Added" />
+                  <ScrollPane prefHeight="250.0" prefWidth="1120.0">
+                     <content>
+                        <HBox fx:id="CardLayout" prefHeight="250.0" prefWidth="1378.0" styleClass="tra" stylesheets="@../../../../../../../../../../HTML_Project/HTMLwithPDA-PhuongNg/src/main/resources/CSS/style.css" />
+                     </content>
+                  </ScrollPane>
+                  <Label prefHeight="35.0" prefWidth="163.0" text="Recommended Today" />
+                  <ScrollPane prefHeight="194.0" prefWidth="1132.0" VBox.vgrow="ALWAYS">
+                     <content>
+                        <GridPane fx:id="Case">
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                     </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </center>
+         <top>
+            <HBox prefHeight="67.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="193.0" text="HTML" />
+                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="382.0">
+                     <children>
+                        <TextField alignment="CENTER" prefHeight="25.0" prefWidth="265.0" text="dasdasd" />
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="67.0" prefWidth="330.0" HBox.hgrow="ALWAYS" />
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="67.0" prefWidth="326.0" text="Username" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
