@@ -3,7 +3,9 @@ package org.example.book;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -24,22 +26,53 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class BookController implements Initializable {
-
-    @FXML
-    private HBox CardLayout;
     @FXML
     private GridPane Case;
 
+    @FXML
+    private ImageView bookImageView;
+
+    @FXML
+    private HBox cardCase;
+
+    @FXML
+    private TextArea descriptionArea;
+
+    @FXML
+    private Label detailsLabel;
+
+    @FXML
+    private Button downloadButton;
+
+    @FXML
+    private ListView<String> listView;
+
+    @FXML
+    private Button previewButton;
+
+    @FXML
+    private TextField searchBook;
+
+    @FXML
+    private Pane showBook;
+
+    @FXML
+    private VBox showSearch;
+
+    @FXML
+    private Label titleLabel;
+
+
     private List<Book> recentlyAdded;
     private List<Book> BookCase;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        recentlyAdded = new ArrayList<>(fetchBooksFromAPI(6)); // Fetch 3 books for "recently added"
-        BookCase = new ArrayList<>(fetchBooksFromAPI(18)); // Fetch 18 books for "bookcase"
-
+        recentlyAdded = new ArrayList<>(fetchBooksFromAPI(3)); // Fetch 3 books for "recently added"
+        BookCase = new ArrayList<>(fetchBooksFromAPI(6)); // Fetch 18 books for "bookcase"
+        SearchBar searchBar = new SearchBar();
         loadRecentlyAddedBooks();
         loadBookCaseBooks();
+        searchBar.setupSearchField(searchBook,listView);
     }
 
     private static final String GOOGLE_BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
@@ -140,7 +173,7 @@ public class BookController implements Initializable {
                 CardController cardController = fxmlLoader.getController();
                 cardController.setData(book);
                 cardBox.setUserData(book);
-                CardLayout.getChildren().add(cardBox);
+                cardCase.getChildren().add(cardBox);
 
             }
         } catch (IOException e) {
@@ -158,7 +191,7 @@ public class BookController implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("BookCase.fxml"));
                 VBox bookCaseBox = fxmlLoader.load();
                 BookCaseController bookCaseController = fxmlLoader.getController();
-                bookCaseController.setData(book);
+                bookCaseController.setData(book,titleLabel,bookImageView,descriptionArea,detailsLabel,previewButton,downloadButton);
                 bookCaseBox.setUserData(book);
                 if (column == 6) {
                     column = 0;
@@ -173,4 +206,8 @@ public class BookController implements Initializable {
         }
     }
 
+    public void handleBacktosearchBook(MouseEvent mouseEvent) {
+        showBook.setVisible(!showBook.isVisible());
+        showSearch.setVisible(!showSearch.isVisible());
+    }
 }

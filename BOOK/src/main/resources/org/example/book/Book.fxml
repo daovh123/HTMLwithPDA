@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -11,6 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="890.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.book.BookController">
    <children>
@@ -39,35 +44,18 @@
                </children>
             </VBox>
          </left>
-         <center>
-            <VBox prefHeight="760.0" prefWidth="1102.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label prefHeight="35.0" prefWidth="163.0" text="Recently Added" />
-                  <ScrollPane prefHeight="250.0" prefWidth="1120.0">
-                     <content>
-                        <HBox fx:id="CardLayout" prefHeight="250.0" prefWidth="1378.0" styleClass="tra" stylesheets="@../../../../../../../../../../HTML_Project/HTMLwithPDA-PhuongNg/src/main/resources/CSS/style.css" />
-                     </content>
-                  </ScrollPane>
-                  <Label prefHeight="35.0" prefWidth="163.0" text="Recommended Today" />
-                  <ScrollPane prefHeight="194.0" prefWidth="1132.0" VBox.vgrow="ALWAYS">
-                     <content>
-                        <GridPane fx:id="Case">
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                        </GridPane>
-                     </content>
-                  </ScrollPane>
-               </children>
-            </VBox>
-         </center>
          <top>
             <HBox prefHeight="67.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="193.0" text="HTML" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="67.0" prefWidth="382.0">
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="489.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="25.0" prefWidth="265.0" text="dasdasd" />
+                        <Pane prefHeight="46.0" prefWidth="482.0">
+                           <children>
+                              <TextField fx:id="searchBook" layoutX="23.0" layoutY="14.0" prefHeight="25.0" prefWidth="449.0" />
+                              <ListView fx:id="listView" layoutX="24.0" layoutY="40.0" prefHeight="590.0" prefWidth="450.0" visible="false" />
+                           </children>
+                        </Pane>
                      </children>
                   </HBox>
                   <Pane prefHeight="67.0" prefWidth="330.0" HBox.hgrow="ALWAYS" />
@@ -79,6 +67,62 @@
                </children>
             </HBox>
          </top>
+         <center>
+            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="showSearch" prefHeight="760.0" prefWidth="1102.0" visible="false">
+                     <children>
+                        <Pane prefHeight="34.0" prefWidth="1102.0">
+                           <children>
+                              <Label prefHeight="35.0" prefWidth="163.0" text="Recently Added" />
+                           </children>
+                        </Pane>
+                        <ScrollPane prefHeight="250.0" prefWidth="1120.0">
+                           <content>
+                              <HBox fx:id="cardCase" prefHeight="250.0" prefWidth="1378.0" styleClass="tra" stylesheets="@../../../../../../../../../../HTML_Project/HTMLwithPDA-PhuongNg/src/main/resources/CSS/style.css" />
+                           </content>
+                        </ScrollPane>
+                        <Label prefHeight="35.0" prefWidth="163.0" text="Search results:" />
+                        <ScrollPane prefHeight="194.0" prefWidth="1132.0" VBox.vgrow="ALWAYS">
+                           <content>
+                              <GridPane fx:id="Case">
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <Pane fx:id="showBook" prefHeight="760.0" prefWidth="1105.0">
+                     <children>
+                        <AnchorPane prefHeight="760.0" prefWidth="1105.0">
+                           <children>
+                              <Button mnemonicParsing="false" onMouseClicked="#handleBacktosearchBook" prefHeight="35.0" prefWidth="39.0" text="⬅" />
+                              <Label layoutX="39.0" layoutY="1.0" prefHeight="34.0" prefWidth="599.0" text="Label">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="bookImageView" fitHeight="360.0" fitWidth="270.0" layoutX="28.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" />
+                              <Label fx:id="titleLabel" layoutX="313.0" layoutY="74.0" prefHeight="34.0" prefWidth="599.0" text="Name of Book">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="detailsLabel" layoutX="313.0" layoutY="108.0" prefHeight="175.0" prefWidth="270.0" text="ạdaskdasjdkjlaslkasfaklsfjafkjaskfasklfksjlflaklfals" />
+                              <TextArea fx:id="descriptionArea" layoutX="313.0" layoutY="292.0" prefHeight="355.0" prefWidth="665.0" />
+                              <Button fx:id="downloadButton" layoutX="28.0" layoutY="470.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Download" />
+                              <Button fx:id="previewButton" layoutX="198.0" layoutY="470.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Preview" />
+                              <Button layoutX="28.0" layoutY="534.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Show QR" />
+                              <Button layoutX="198.0" layoutY="534.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Borrow" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>
