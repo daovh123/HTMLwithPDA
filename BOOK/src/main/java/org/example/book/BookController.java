@@ -1,9 +1,15 @@
 package org.example.book;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -14,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.geometry.Insets;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
@@ -26,6 +34,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 public class BookController implements Initializable {
+
     @FXML
     private GridPane Case;
 
@@ -63,18 +72,38 @@ public class BookController implements Initializable {
     private Label titleLabel;
 
 
+    private Book book;
     private List<Book> recentlyAdded;
     private List<Book> BookCase;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         recentlyAdded = new ArrayList<>(fetchBooksFromAPI(3)); // Fetch 3 books for "recently added"
         BookCase = new ArrayList<>(fetchBooksFromAPI(6)); // Fetch 18 books for "bookcase"
         SearchBar searchBar = new SearchBar();
+        listView.toFront();
         loadRecentlyAddedBooks();
         loadBookCaseBooks();
-        searchBar.setupSearchField(searchBook,listView);
+        searchBar.setupSearchField(searchBook, listView);
+       // setBook();
     }
 
+    public void AfterClick(Book book) {
+        bookImageView.setImage(new Image (book.getImageLink()));
+        detailsLabel.setText((
+                "Author(s): " + book.getAuthors() + "\n" +
+                        "Publisher: " + book.getPublisher() + "\n" +
+                        "Published Date: " + book.getPublicationDate() + "\n" +
+                        "Language: " + book.getLanguage() + "\n" +
+                        "Categories: " + book.getSubject() + "\n" +
+                        "Page Count: " + book.getNumberOfPages()
+        ));
+        descriptionArea.setText(book.getDescription());
+        previewButton.setOnAction(e -> openPreviewLink(book));
+        downloadButton.setOnAction(e -> downloadBook(book));
+        setShowBook();
+        setShowSearch();
+    }
     private static final String GOOGLE_BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
     // Fetch books from Google Books API
@@ -174,7 +203,6 @@ public class BookController implements Initializable {
                 cardController.setData(book);
                 cardBox.setUserData(book);
                 cardCase.getChildren().add(cardBox);
-
             }
         } catch (IOException e) {
             System.out.println("Error loading FXML for recently added books: " + e.getMessage());
@@ -191,7 +219,7 @@ public class BookController implements Initializable {
                 fxmlLoader.setLocation(getClass().getResource("BookCase.fxml"));
                 VBox bookCaseBox = fxmlLoader.load();
                 BookCaseController bookCaseController = fxmlLoader.getController();
-                bookCaseController.setData(book,titleLabel,bookImageView,descriptionArea,detailsLabel,previewButton,downloadButton);
+                bookCaseController.setData(book);
                 bookCaseBox.setUserData(book);
                 if (column == 6) {
                     column = 0;
@@ -205,9 +233,48 @@ public class BookController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    public void handleBacktosearchBook(MouseEvent mouseEvent) {
+    public void setShowBook() {
         showBook.setVisible(!showBook.isVisible());
+    }
+    public void setShowSearch() {
         showSearch.setVisible(!showSearch.isVisible());
     }
+
+    @FXML
+    public void handleBacktosearchBook2(MouseEvent mouseEvent) {
+        setShowSearch();
+        setShowBook();
+        //setBook(book);
+        AfterClick(book);
+    }
+    private void openPreviewLink(Book book) {
+        if (book.getPreviewLink() != null && !book.getPreviewLink().isEmpty()) {
+            try {
+                Desktop.getDesktop().browse(URI.create(book.getPreviewLink()));
+            } catch (Exception e) {
+                System.out.println("Error opening preview link: " + e.getMessage());
+            }
+        } else {
+            showAlert("Preview Not Available", "This book does not have a preview link.");
+        }
+    }
+    // Phương thức tải sách
+    private void downloadBook(Book book) {
+        if (book.getDownloadLink() != null && !book.getDownloadLink().isEmpty()) {
+            try {
+                Desktop.getDesktop().browse(URI.create(book.getDownloadLink()));
+            } catch (Exception e) {
+                System.out.println("Error downloading book: " + e.getMessage());
+            }
+        } else {
+            showAlert("Download Not Available", "This book does not have a download link.");
+        }
+    }
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 }

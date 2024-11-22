@@ -48,16 +48,11 @@
             <HBox prefHeight="67.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="193.0" text="HTML" />
-                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="489.0">
+                  <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Pane prefHeight="46.0" prefWidth="482.0">
-                           <children>
-                              <TextField fx:id="searchBook" layoutX="23.0" layoutY="14.0" prefHeight="25.0" prefWidth="449.0" />
-                              <ListView fx:id="listView" layoutX="24.0" layoutY="40.0" prefHeight="590.0" prefWidth="450.0" visible="false" />
-                           </children>
-                        </Pane>
+                        <TextField fx:id="searchBook" prefHeight="25.0" prefWidth="450.0" />
                      </children>
-                  </HBox>
+                  </Pane>
                   <Pane prefHeight="67.0" prefWidth="330.0" HBox.hgrow="ALWAYS" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
@@ -68,21 +63,21 @@
             </HBox>
          </top>
          <center>
-            <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Pane BorderPane.alignment="CENTER">
                <children>
-                  <VBox fx:id="showSearch" prefHeight="760.0" prefWidth="1102.0" visible="false">
+                  <VBox fx:id="showSearch" prefHeight="760.0" prefWidth="1102.0">
                      <children>
                         <Pane prefHeight="34.0" prefWidth="1102.0">
                            <children>
-                              <Label prefHeight="35.0" prefWidth="163.0" text="Recently Added" />
+                              <Label prefHeight="35.0" prefWidth="163.0" text="            Recently Added" />
                            </children>
                         </Pane>
                         <ScrollPane prefHeight="250.0" prefWidth="1120.0">
                            <content>
-                              <HBox fx:id="cardCase" prefHeight="250.0" prefWidth="1378.0" styleClass="tra" stylesheets="@../../../../../../../../../../HTML_Project/HTMLwithPDA-PhuongNg/src/main/resources/CSS/style.css" />
+                              <HBox fx:id="cardCase" prefHeight="250.0" prefWidth="1112.0" styleClass="tra" stylesheets="@../../../../../../../../../../HTML_Project/HTMLwithPDA-PhuongNg/src/main/resources/CSS/style.css" />
                            </content>
                         </ScrollPane>
-                        <Label prefHeight="35.0" prefWidth="163.0" text="Search results:" />
+                        <Label prefHeight="35.0" prefWidth="163.0" text="             Search results:" />
                         <ScrollPane prefHeight="194.0" prefWidth="1132.0" VBox.vgrow="ALWAYS">
                            <content>
                               <GridPane fx:id="Case">
@@ -94,11 +89,11 @@
                         </ScrollPane>
                      </children>
                   </VBox>
-                  <Pane fx:id="showBook" prefHeight="760.0" prefWidth="1105.0">
+                  <ListView fx:id="listView" cache="true" cacheHint="SPEED" layoutX="10.0" layoutY="-41.0" mouseTransparent="true" prefHeight="483.0" prefWidth="451.0" visible="false" />
+                  <Pane fx:id="showBook" prefHeight="760.0" prefWidth="1105.0" visible="false">
                      <children>
                         <AnchorPane prefHeight="760.0" prefWidth="1105.0">
                            <children>
-                              <Button mnemonicParsing="false" onMouseClicked="#handleBacktosearchBook" prefHeight="35.0" prefWidth="39.0" text="⬅" />
                               <Label layoutX="39.0" layoutY="1.0" prefHeight="34.0" prefWidth="599.0" text="Label">
                                  <font>
                                     <Font size="22.0" />
@@ -111,11 +106,16 @@
                                  </font>
                               </Label>
                               <Label fx:id="detailsLabel" layoutX="313.0" layoutY="108.0" prefHeight="175.0" prefWidth="270.0" text="ạdaskdasjdkjlaslkasfaklsfjafkjaskfasklfksjlflaklfals" />
-                              <TextArea fx:id="descriptionArea" layoutX="313.0" layoutY="292.0" prefHeight="355.0" prefWidth="665.0" />
+                              <TextArea fx:id="descriptionArea" layoutX="313.0" layoutY="292.0" prefHeight="355.0" prefWidth="665.0" wrapText="true" />
                               <Button fx:id="downloadButton" layoutX="28.0" layoutY="470.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Download" />
                               <Button fx:id="previewButton" layoutX="198.0" layoutY="470.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Preview" />
                               <Button layoutX="28.0" layoutY="534.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Show QR" />
                               <Button layoutX="198.0" layoutY="534.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="100.0" text="Borrow" />
+                              <Button fx:id="buttonReturn" mnemonicParsing="false" onMouseClicked="#handleBacktosearchBook2" prefHeight="36.0" prefWidth="36.0" text="⟲">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>

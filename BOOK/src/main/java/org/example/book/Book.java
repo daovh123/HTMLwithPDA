@@ -95,6 +95,14 @@ public class Book {
     public String getAuthors() { return authors; }
     public void setAuthors(String authors) { this.authors = authors; }
 
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
