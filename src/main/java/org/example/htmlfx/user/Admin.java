@@ -1,8 +1,20 @@
 package org.example.htmlfx.user;
 
-public class Admin {
+import java.util.Date;
+
+public class Admin extends Users {
     private String password;
     private String admin_name;
+
+    public Admin() {
+        super();
+    }
+
+    public Admin(String id, String firstname, String lastname, String gender, String birthday, String email, String phone, String password, String admin_name) {
+        super(id, firstname, lastname, gender, birthday, email, phone);
+        this.password = password;
+        this.admin_name = admin_name;
+    }
 
     public String getPassword() {
         return password;

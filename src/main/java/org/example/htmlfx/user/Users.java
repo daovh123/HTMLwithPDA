@@ -1,30 +1,63 @@
 package org.example.htmlfx.user;
 
+import java.util.Date;
+
 public class Users {
+    private String id;
+    private String firstname;
+    private String lastname;
+    private String gender;
+    private String birthday;
     private String email;
     private String phone;
-    private int userID;
-    private String username;
-    private String sex;
-    private String birthday;
 
-    public Users() {
+    public Users() {}
 
-    }
-
-    public Users(String email, String phone, int userID, String username) {
+    public Users(String id, String firstname, String lastname, String gender, String birthday, String email, String phone) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.birthday = birthday;
         this.email = email;
         this.phone = phone;
-        this.userID = userID;
-        this.username = username;
     }
 
-    public Users(String email, String phone, int userID,  String username, String sex, String birthday) {
-        this.email = email;
-        this.phone = phone;
-        this.userID = userID;
-        this.username = username;
-        this.sex = sex;
+    public String getId() { return id;}
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -42,37 +75,5 @@ public class Users {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="66.0" prefWidth="316.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.user.Member_Delete">
+   <children>
+      <TextField fx:id="member_ID" layoutX="14.0" layoutY="21.0" promptText="Enter member_ID" />
+      <Button layoutX="183.0" layoutY="21.0" mnemonicParsing="false" onAction="#deleteMember" text="Delete" />
+      <Button layoutX="252.0" layoutY="21.0" mnemonicParsing="false" onAction="#backToMember" text="Back" />
+   </children>
+</AnchorPane>
