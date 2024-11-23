@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.InputStreamReader;
 import com.google.gson.*;
+import org.example.htmlfx.user.Member_controller;
 
 public class SearchBar {
 
@@ -43,7 +44,7 @@ public class SearchBar {
         });
     }
 
-    public void setupSearchFieldForDatabase(TextField searchField, ListView<String> suggestionList) {
+    public void setupSearchFieldForDatabase(TextField searchField, ListView<String> suggestionList, Member_controller controller) {
         // Xử lý sự kiện khi người dùng nhập vào TextField
         searchField.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             String query = searchField.getText().trim();
@@ -62,8 +63,14 @@ public class SearchBar {
         // Chọn một gợi ý khi người dùng click vào
         suggestionList.setOnMouseClicked(event -> {
             String selectedItem = suggestionList.getSelectionModel().getSelectedItem();
-            searchField.setText(selectedItem); // Điền vào TextField
-            suggestionList.setVisible(false); // Ẩn danh sách gợi ý
+            if (selectedItem != null) {
+                searchField.setText(selectedItem); // Điền vào TextField
+                suggestionList.setVisible(false); // Ẩn danh sách gợi ý
+
+                // Gọi phương thức selectItemInSgList trong controller
+                controller.selectItemInSgList();
+                searchField.setText("");
+            }
         });
     }
 

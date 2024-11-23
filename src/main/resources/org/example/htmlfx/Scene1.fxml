@@ -32,7 +32,7 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <Label alignment="CENTER" layoutX="11.0" layoutY="250.0" prefHeight="40.0" prefWidth="172.0" styleClass="selection_Button" stylesheets="@Scene.css" text="User" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="11.0" layoutY="250.0" onMouseClicked="#moveToUser" prefHeight="40.0" prefWidth="172.0" styleClass="selection_Button" stylesheets="@Scene.css" text="User" textAlignment="CENTER" />
                   <Label alignment="CENTER" layoutX="11.0" layoutY="300.0" prefHeight="37.0" prefWidth="172.0" styleClass="selection_Button" stylesheets="@Scene.css" text="1" textAlignment="CENTER" />
                   <Label alignment="CENTER" layoutX="11.0" layoutY="350.0" prefHeight="38.0" prefWidth="172.0" styleClass="selection_Button" stylesheets="@Scene.css" text="2" textAlignment="CENTER" />
                   <Label alignment="CENTER" layoutX="11.0" layoutY="400.0" prefHeight="38.0" prefWidth="172.0" styleClass="selection_Button" stylesheets="@Scene.css" text="3" textAlignment="CENTER" />

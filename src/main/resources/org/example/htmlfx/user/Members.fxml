@@ -16,11 +16,11 @@
     <children>
       <Pane layoutX="181.0" prefHeight="137.0" prefWidth="430.0">
          <children>
-              <TextField fx:id="searchID" layoutY="1.0" prefHeight="25.0" prefWidth="430.0" promptText="search" />
+              <TextField fx:id="searchID" layoutY="1.0" prefHeight="25.0" prefWidth="430.0" promptText="search ID" />
             <ListView fx:id="listView" layoutY="27.0" prefHeight="112.0" prefWidth="430.0" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="pane1" layoutX="259.0" layoutY="158.0" prefHeight="395.0" prefWidth="593.0">
+      <Pane fx:id="pane1" layoutX="259.0" layoutY="158.0" prefHeight="395.0" prefWidth="593.0" visible="false">
          <children>
               <Button layoutX="424.0" layoutY="45.0" mnemonicParsing="false" onAction="#addMember" text="Add" />
               <Button layoutX="484.0" layoutY="45.0" mnemonicParsing="false" onAction="#deleteMember" text="Delete" />
@@ -35,7 +35,7 @@
               </TableView>
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="287.0" layoutY="132.0" prefHeight="421.0" prefWidth="566.0" visible="false">
+      <Pane fx:id="pane2" layoutX="287.0" layoutY="132.0" prefHeight="421.0" prefWidth="566.0">
          <children>
             <TableView fx:id="tableInfo" layoutY="164.0" prefHeight="257.0" prefWidth="566.0">
                <columns>
@@ -48,7 +48,7 @@
             <ImageView fitHeight="137.0" fitWidth="151.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
             <VBox layoutX="165.0" prefHeight="100.0" prefWidth="100.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UserID:" wrappingWidth="80.0">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" wrappingWidth="80.0">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -82,7 +82,7 @@
             </VBox>
             <VBox layoutX="283.0" layoutY="1.0" prefHeight="120.0" prefWidth="285.0">
                <children>
-                  <Text fx:id="info_id" strokeType="OUTSIDE" strokeWidth="0.0" text="UserID" wrappingWidth="250.0">
+                  <Text fx:id="info_id" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="250.0">
                      <font>
                         <Font size="16.0" />
                      </font>

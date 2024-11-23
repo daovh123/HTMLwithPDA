@@ -39,15 +39,15 @@ public class Member_Delete implements ParentControllerAware {
 
         String memberId = member_ID.getText();
 
-        String checkMemberSQL = "SELECT COUNT(*) FROM members WHERE userID = ?";
-        String deleteMemberSQL = "DELETE FROM members WHERE userID = ?";
+        String checkMemberSQL = "SELECT COUNT(*) FROM members WHERE member_id = ?";
+        String deleteMemberSQL = "DELETE FROM members WHERE member_id = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement checkMemberStatement = connection.prepareStatement(checkMemberSQL);
              PreparedStatement deleteMemberStatement = connection.prepareStatement(deleteMemberSQL)) {
 
             // Kiểm tra xem ID có tồn tại hay không
-            checkMemberStatement.setInt(1, Integer.parseInt(memberId));
+            checkMemberStatement.setString(1, memberId);
             ResultSet resultSet = checkMemberStatement.executeQuery();
             resultSet.next();
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
@@ -50,7 +51,7 @@
                <children>
                   <TextField fx:id="info_firstname" />
                   <TextField fx:id="info_lastname" />
-                  <TextField fx:id="info_gender" />
+                  <ComboBox fx:id="info_gender" prefHeight="25.0" prefWidth="296.0" />
                   <TextField fx:id="info_birthday" />
                   <TextField fx:id="info_email" />
                   <TextField fx:id="info_phone" />

@@ -8,6 +8,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class DashboardControl {
     @FXML
@@ -52,4 +53,8 @@ public class DashboardControl {
 
     }
 
+    @FXML
+    public void moveToUser(MouseEvent mouseEvent) {
+
+    }
 }

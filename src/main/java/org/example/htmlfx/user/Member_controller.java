@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static org.example.htmlfx.Alert.showAlert;
+
 public class Member_controller implements Initializable {
     @FXML
     private TableView<Member> tableView;
@@ -75,6 +77,16 @@ public class Member_controller implements Initializable {
 
     private static Member currentMember = new Member();
 
+    private static Member selectedMemberInSuggestionList = new Member();
+
+    public Member getSelectedMember() {
+        return selectedMember;
+    }
+
+    public Member getSelectedMemberInSuggestionList() {
+        return selectedMemberInSuggestionList;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -122,7 +134,7 @@ public class Member_controller implements Initializable {
         });
 
         SearchBar search = new SearchBar();
-        search.setupSearchFieldForDatabase(searchID, listView);
+        search.setupSearchFieldForDatabase(searchID, listView, this);
 
         pane1.setVisible(true);
         pane2.setVisible(false);
@@ -157,8 +169,7 @@ public class Member_controller implements Initializable {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                int ID = resultSet.getInt("member_id");
-                String id = String.format("%06d", ID);
+                String id = resultSet.getString("member_id");
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
                 String gender = resultSet.getString("gender");
@@ -179,7 +190,7 @@ public class Member_controller implements Initializable {
         sw.openNewScene(event, "user/Member_Delete.fxml", this);
     }
 
-    public void back(ActionEvent event) throws IOException {
+    public void back() throws IOException {
         pane1.setVisible(true);
         pane2.setVisible(false);
     }
@@ -195,13 +206,41 @@ public class Member_controller implements Initializable {
     }
 
     public void updatePane2(Member updatedMember) {
-        // Hiển thị thông tin mới trong pane2
         info_id.setText(updatedMember.getId());
         info_name.setText(updatedMember.getFirstname() + ' ' + updatedMember.getLastname());
         info_phone.setText(updatedMember.getPhone());
         info_email.setText(updatedMember.getEmail());
         info_gender.setText(updatedMember.getGender());
         info_birthday.setText(updatedMember.getBirthday());
+    }
+
+    public void selectItemInSgList() {
+        Member member = new Member();
+        String sql = "SELECT * FROM members WHERE member_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement selectMemberStatement = connection.prepareStatement(sql)) {
+
+            selectMemberStatement.setString(1, searchID.getText()); // Gán giá trị cho tham số truy vấn
+            ResultSet resultSet = selectMemberStatement.executeQuery(); // Thực hiện truy vấn và nhận kết quả
+
+            if (resultSet.next()) { // Kiểm tra nếu có kết quả
+                member.setId(resultSet.getString("member_id"));
+                member.setEmail(resultSet.getString("email"));
+                member.setPhone(resultSet.getString("phone"));
+                member.setGender(resultSet.getString("gender"));
+                member.setBirthday(resultSet.getString("birth"));
+                member.setFirstname(resultSet.getString("firstname"));
+                member.setLastname(resultSet.getString("lastname"));
+
+                selectedMember = member;
+                currentMember = selectedMember;
+                handleDoubleClick(member);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+        }
     }
 
 }

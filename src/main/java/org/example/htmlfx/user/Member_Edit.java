@@ -3,6 +3,7 @@ package org.example.htmlfx.user;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.htmlfx.DatabaseConnection;
@@ -11,6 +12,9 @@ import org.example.htmlfx.ParentControllerAware;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import static org.example.htmlfx.Alert.showAlert;
+import static org.example.htmlfx.Checked.*;
 
 public class Member_Edit implements ParentControllerAware {
     private Member_controller parentController;
@@ -27,7 +31,7 @@ public class Member_Edit implements ParentControllerAware {
     private TextField info_email;
 
     @FXML
-    private TextField info_gender;
+    private ComboBox<String> info_gender;
 
     @FXML
     private TextField info_lastname;
@@ -43,9 +47,11 @@ public class Member_Edit implements ParentControllerAware {
     public void initialize() {
         edittingMember = Member_controller.getCurrentMember();
 
+        info_gender.getItems().addAll("Male", "Female", "Other");
+
         info_birthday.setText(edittingMember.getBirthday());
         info_email.setText(edittingMember.getEmail());
-        info_gender.setText(edittingMember.getGender());
+        info_gender.setValue(edittingMember.getGender());
         info_phone.setText(edittingMember.getPhone());
         info_firstname.setText(edittingMember.getFirstname());
         info_lastname.setText(edittingMember.getLastname());
@@ -57,11 +63,26 @@ public class Member_Edit implements ParentControllerAware {
 
         if (info_birthday.getText().isEmpty()
                 || info_email.getText().isEmpty()
-                || info_gender.getText().isEmpty()
+                || info_gender.getValue().isEmpty()
                 || info_phone.getText().isEmpty()
                 || info_firstname.getText().isEmpty()
                 || info_lastname.getText().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Warning", "All fields must be filled.");
+            return;
+        }
+
+        if (!isValidDate(info_birthday.getText())) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Invalid date format. Use yyyy-MM-dd.");
+            return;
+        }
+
+        if (!isValidEmail(info_email.getText())) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Invalid email format.");
+            return;
+        }
+
+        if (!isValidPhone(info_phone.getText())) {
+            showAlert(Alert.AlertType.WARNING, "Warning", "Phone number must start with '0' and have 10 digits.");
             return;
         }
 
@@ -75,7 +96,7 @@ public class Member_Edit implements ParentControllerAware {
             // Cập nhật thông tin mới từ các trường trong form
             String newFirstname = info_firstname.getText();
             String newLastname = info_lastname.getText();
-            String newGender = info_gender.getText();
+            String newGender = info_gender.getValue();
             String newBirthday = info_birthday.getText();
             String newEmail = info_email.getText();
             String newPhone = info_phone.getText();
@@ -90,6 +111,13 @@ public class Member_Edit implements ParentControllerAware {
 
             int rowsAffected = updateMemberStatement.executeUpdate();
             if (rowsAffected > 0) {
+                edittingMember.setFirstname(info_firstname.getText());
+                edittingMember.setLastname(info_lastname.getText());
+                edittingMember.setGender(info_gender.getValue());
+                edittingMember.setBirthday(info_birthday.getText());
+                edittingMember.setEmail(info_email.getText());
+                edittingMember.setPhone(info_phone.getText());
+
                 showAlert(Alert.AlertType.INFORMATION, "Success", "User updated successfully.");
 
                 // Cập nhật pane2 với thông tin mới nếu parentController không null
@@ -122,13 +150,4 @@ public class Member_Edit implements ParentControllerAware {
         Stage stage = (Stage) info_birthday.getScene().getWindow();
         stage.close();
     }
-
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }
