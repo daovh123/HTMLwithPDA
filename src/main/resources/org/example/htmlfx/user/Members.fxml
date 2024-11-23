@@ -20,7 +20,7 @@
             <ListView fx:id="listView" layoutY="27.0" prefHeight="112.0" prefWidth="430.0" visible="false" />
          </children>
       </Pane>
-      <Pane fx:id="pane1" layoutX="259.0" layoutY="158.0" prefHeight="395.0" prefWidth="593.0" visible="false">
+      <Pane fx:id="pane1" layoutX="259.0" layoutY="158.0" prefHeight="395.0" prefWidth="593.0">
          <children>
               <Button layoutX="424.0" layoutY="45.0" mnemonicParsing="false" onAction="#addMember" text="Add" />
               <Button layoutX="484.0" layoutY="45.0" mnemonicParsing="false" onAction="#deleteMember" text="Delete" />
@@ -29,13 +29,13 @@
                       <TableColumn fx:id="IDColumn" prefWidth="65.99993896484375" text="ID" />
                       <TableColumn fx:id="NameColumn" prefWidth="84.66667175292969" text="Name" />
                   <TableColumn fx:id="GenderColumn" prefWidth="75.0" text="Gender" />
-                      <TableColumn fx:id="EmailColumn" prefWidth="75.0" text="Email" />
-                      <TableColumn fx:id="PhoneColumn" prefWidth="75.0" text="Phone" />
+                      <TableColumn fx:id="EmailColumn" prefWidth="175.0" text="Email" />
+                      <TableColumn fx:id="PhoneColumn" prefWidth="64.0" text="Phone" />
                   </columns>
               </TableView>
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="287.0" layoutY="132.0" prefHeight="421.0" prefWidth="566.0">
+      <Pane fx:id="pane2" layoutX="287.0" layoutY="132.0" prefHeight="421.0" prefWidth="566.0" visible="false">
          <children>
             <TableView fx:id="tableInfo" layoutY="164.0" prefHeight="257.0" prefWidth="566.0">
                <columns>
