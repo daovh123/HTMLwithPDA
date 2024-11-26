@@ -5,10 +5,19 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import org.example.htmlfx.DatabaseConnection;
+import org.example.htmlfx.user.Member;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardControl {
     @FXML
@@ -21,22 +30,37 @@ public class DashboardControl {
     private TableColumn<MostBorrowed, String> borrowedTimes;
     @FXML
     private LineChart<?, ?> lineChart;
-
+    @FXML
+    private Label getIncome;
     @FXML
     public void initialize() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         borrowedTimes.setCellValueFactory(new PropertyValueFactory<>("borrowedTimes"));
 
-    ObservableList<MostBorrowed> data= FXCollections.observableArrayList(
-            new MostBorrowed(1234,"Ngoi nha hanh phuc","100"),
-            new MostBorrowed(1234,"Ngoi nha hanh phuc","100"),
-            new MostBorrowed(1234,"Ngoi nha hanh phuc","100"),
-            new MostBorrowed(1235,"Con ma trong long thanh pho","200")
+        ObservableList<MostBorrowed> data= FXCollections.observableArrayList(DashboardControl.getBorrowed());
+        tableView.setItems(data);
+        setLineChart();
+        setIncome();
+    }
 
-            );
-    tableView.setItems(data);
-    setLineChart();
+    public static List<MostBorrowed> getBorrowed() {
+        List<MostBorrowed> mostBorrowed = new ArrayList<>();
+        // Sửa câu truy vấn để lấy 10 cuốn sách có time_of_borrow cao nhất
+        String sql = "SELECT * FROM books ORDER BY time_of_borrow DESC LIMIT 10";
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            while (resultSet.next()) {
+                String id = resultSet.getString("book_id");
+                String name = resultSet.getString("book_name");
+                String borrowedTimes = resultSet.getString("time_of_borrow");
+                mostBorrowed.add(new MostBorrowed(id, name, borrowedTimes));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return mostBorrowed;
     }
 
     @FXML
@@ -52,9 +76,21 @@ public class DashboardControl {
         lineChart.getData().add(series);
 
     }
+     private void setIncome() {
+             double totalPayment = 0.0;
+             String sql = "SELECT SUM(price) AS total_payment FROM payment";
 
-    @FXML
-    public void moveToUser(MouseEvent mouseEvent) {
+             try (Connection connection = DatabaseConnection.getConnection();
+                  Statement statement = connection.createStatement();
+                  ResultSet resultSet = statement.executeQuery(sql)) {
+                 if (resultSet.next()) {
+                     totalPayment = resultSet.getDouble("total_payment");
+                 }
+             } catch (SQLException e) {
+                 System.err.println("Lỗi khi truy vấn tổng giá trị payment: " + e.getMessage());
+                 e.printStackTrace();
+             }
+             getIncome.setText(String.valueOf(totalPayment)+"$");
 
-    }
+     }
 }

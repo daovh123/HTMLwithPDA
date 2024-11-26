@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Book {
     private String ID;
-    private String ISBN;
+    private String bookmark;
     private String title;
     private String subject;
     private String publisher;
@@ -18,6 +18,25 @@ public class Book {
     private String downloadLink;
     private String previewLink;
     private String description;
+    private int amount;
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
 
     public String getDescription() {
         return description;
@@ -47,8 +66,12 @@ public class Book {
         this.title = title;
         this.authors = author;
     }
-    public Book(String ISBN, String title, String subject, String publisher, String publicationDate, String language, int numberOfPages, String format, String authors, String imageLink, String downloadLink, String previewLink, String description) {
-        this.ISBN = ISBN;
+
+    public Book(String bookmark, String title, String subject, String publisher,
+                String publicationDate, String language, int numberOfPages, String format,
+                String authors, String imageLink, String downloadLink, String previewLink,
+                String description, int amount, double price) {
+        this.bookmark = bookmark;
         this.title = title;
         this.subject = subject;
         this.publisher = publisher;
@@ -61,39 +84,90 @@ public class Book {
         this.downloadLink = downloadLink;
         this.previewLink = previewLink;
         this.description = description;
+        this.amount = amount;
+        this.price = price;
+    }
+    // Getters and setters
+    public String getImageLink() {
+        return imageLink;
     }
 
-    // Getters and setters
-    public String getImageLink() { return imageLink; }
-    public void setImageLink(String imageLink) { this.imageLink = imageLink; }
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 
     // Getters and setters for all fields
-    public String getISBN() { return ISBN; }
-    public void setISBN(String ISBN) { this.ISBN = ISBN; }
+    public String getbookmark() {
+        return bookmark;
+    }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public void setbookmark(String bookmark) {
+        this.bookmark = bookmark;
+    }
 
-    public String getSubject() { return subject; }
-    public void setSubject(String subject) { this.subject = subject; }
+    public String getTitle() {
+        return title;
+    }
 
-    public String getPublisher() { return publisher; }
-    public void setPublisher(String publisher) { this.publisher = publisher; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getPublicationDate() { return publicationDate; }
-    public void setPublicationDate(String publicationDate) { this.publicationDate = publicationDate; }
+    public String getSubject() {
+        return subject;
+    }
 
-    public String getLanguage() { return language; }
-    public void setLanguage(String language) { this.language = language; }
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
 
-    public int getNumberOfPages() { return numberOfPages; }
-    public void setNumberOfPages(int numberOfPages) { this.numberOfPages = numberOfPages; }
+    public String getPublisher() {
+        return publisher;
+    }
 
-    public String getFormat() { return format; }
-    public void setFormat(String format) { this.format = format; }
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-    public String getAuthors() { return authors; }
-    public void setAuthors(String authors) { this.authors = authors; }
+    public String getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(String publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public int getNumberOfPages() {
+        return numberOfPages;
+    }
+
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public String getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(String authors) {
+        this.authors = authors;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -106,5 +180,13 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(ID);
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }

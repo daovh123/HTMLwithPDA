@@ -15,16 +15,23 @@ module org.example.htmlfx {
     requires com.google.gson;
     requires org.json;
     requires java.net.http;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
     // Xuất các gói cần thiết cho module khác
     exports org.example.htmlfx;
     exports org.example.htmlfx.book;
     exports org.example.htmlfx.user;  // Đổi User -> user
     exports org.example.htmlfx.dashboard; // Đổi Dashboard -> dashboard
-
+    exports org.example.htmlfx.borrow;
     // Mở các gói cần thiết cho JavaFX FXML
+
     opens org.example.htmlfx to javafx.fxml;
     opens org.example.htmlfx.book to javafx.fxml;
     opens org.example.htmlfx.user to javafx.fxml;  // Đổi User -> user
-    opens org.example.htmlfx.dashboard to javafx.fxml;  // Đổi Dashboard -> dashboard
+    opens org.example.htmlfx.dashboard to javafx.fxml;
+    exports org.example.htmlfx.menu;
+
+    opens org.example.htmlfx.menu to javafx.fxml;  // Đổi Dashboard -> dashboard
+    opens org.example.htmlfx.borrow to javafx.fxml;
 }

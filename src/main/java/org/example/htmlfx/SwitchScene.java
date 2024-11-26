@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.htmlfx.user.Member_Add;
-import org.example.htmlfx.user.Member_Delete;
 import org.example.htmlfx.user.Member_controller;
 
 import java.io.IOException;
@@ -35,9 +33,6 @@ public class SwitchScene {
         newStage.setScene(scene);
         newStage.show();
     }
-
-
-
 
     public void switchScene(ActionEvent event, String scenePath) {
         try {

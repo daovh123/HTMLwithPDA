@@ -8,7 +8,7 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         String databaseName = "library_management";
         String databaseUser = "root";
-        String databasePassword = "423015";
+        String databasePassword = "123456";
         String databaseUrl = "jdbc:mysql://localhost:3306/" + databaseName;
 
         try{

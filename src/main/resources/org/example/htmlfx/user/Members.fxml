@@ -33,16 +33,27 @@
                       <TableColumn fx:id="PhoneColumn" prefWidth="64.0" text="Phone" />
                   </columns>
               </TableView>
+            <Text layoutX="58.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+            <Text fx:id="num_of_mem" layoutX="104.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Pane fx:id="pane2" layoutX="287.0" layoutY="132.0" prefHeight="421.0" prefWidth="566.0">
          <children>
             <TableView fx:id="tableInfo" layoutY="164.0" prefHeight="257.0" prefWidth="566.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="Book ID" />
-                  <TableColumn prefWidth="200.0" text="Books" />
-                  <TableColumn minWidth="100.0" prefWidth="100.0" resizable="false" text="Date-out" />
-                  <TableColumn minWidth="100.0" prefWidth="100.0" text="Due-date" />
+                  <TableColumn fx:id="BorrowedIDColumn" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="BooknameColumn" prefWidth="200.0" text="Name" />
+                  <TableColumn fx:id="BorrowedColumn" minWidth="100.0" prefWidth="100.0" resizable="false" text="Borrowed_date" />
+                  <TableColumn fx:id="ReturnedColumn" minWidth="100.0" prefWidth="100.0" text="Returned_date" />
+                  <TableColumn fx:id="StatusColumn" prefWidth="75.0" text="Status" />
                </columns>
             </TableView>
             <ImageView fitHeight="137.0" fitWidth="151.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />

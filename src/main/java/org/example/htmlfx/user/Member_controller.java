@@ -14,6 +14,7 @@ import javafx.util.Callback;
 import org.example.htmlfx.DatabaseConnection;
 import org.example.htmlfx.SearchBar;
 import org.example.htmlfx.SwitchScene;
+import org.example.htmlfx.borrow.Temp;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,6 +43,24 @@ public class Member_controller implements Initializable {
 
     @FXML
     private TableColumn<Member, String> GenderColumn;
+
+    @FXML
+    private TableView<Temp> tableInfo;
+
+    @FXML
+    private TableColumn<Temp, String> BorrowedIDColumn;
+
+    @FXML
+    private TableColumn<Temp, String> BooknameColumn;
+
+    @FXML
+    private TableColumn<Temp, String> BorrowedColumn;
+
+    @FXML
+    private TableColumn<Temp, String> ReturnedColumn;
+
+    @FXML
+    private TableColumn<Temp, String> StatusColumn;
 
     @FXML
     private ListView<String> listView;
@@ -73,6 +92,9 @@ public class Member_controller implements Initializable {
     @FXML
     private Text info_phone;
 
+    @FXML
+    private Text num_of_mem;
+
     private Member selectedMember = new Member();
 
     private static Member currentMember = new Member();
@@ -89,12 +111,28 @@ public class Member_controller implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        // khoi tao cho tableView
         EmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         PhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         IDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         NameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         GenderColumn.setCellValueFactory(new PropertyValueFactory<>("gender"));
 
+        ObservableList<Member> members = FXCollections.observableArrayList(Member_controller.getMember());
+        if (members.isEmpty()) {
+            System.out.println("No members found in the database.");
+        } else {
+            tableView.setItems(members);
+            total_members();
+        }
+
+        //khoi tao cho tableInfo
+        BorrowedIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        BooknameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        BorrowedColumn.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
+        ReturnedColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+        StatusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         Callback<TableColumn<Member, String>, TableCell<Member, String>> cellFactory = new Callback<TableColumn<Member, String>, TableCell<Member, String>>() {
             @Override
@@ -116,19 +154,15 @@ public class Member_controller implements Initializable {
         IDColumn.setCellFactory(cellFactory);
         PhoneColumn.setCellFactory(cellFactory);
 
-        ObservableList<Member> members = FXCollections.observableArrayList(Member_controller.getMember());
-        if (members.isEmpty()) {
-            System.out.println("No members found in the database.");
-        } else {
-            tableView.setItems(members);
-        }
-
         // Thêm sự kiện nhấn đúp chuột vào TableView
         tableView.setOnMouseClicked(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2) {
-                selectedMember = tableView.getSelectionModel().getSelectedItem();
-                if (selectedMember != null) {
-                    handleDoubleClick(selectedMember);
+                Member selected = tableView.getSelectionModel().getSelectedItem();
+                if (selected != null) { // Thêm kiểm tra
+                    selectedMember = selected;
+                    ObservableList<Temp> temps = FXCollections.observableArrayList(Member_controller.getTemp(selected.getId()));
+                    tableInfo.setItems(temps);
+                    handleDoubleClick(selected);
                 }
             }
         });
@@ -140,13 +174,17 @@ public class Member_controller implements Initializable {
         pane2.setVisible(false);
     }
 
-    private void handleDoubleClick(Member member) {
+    private void setup(Member member) {
         info_id.setText(member.getId());
         info_name.setText(member.getFirstname() + ' ' + member.getLastname());
         info_phone.setText(member.getPhone());
         info_email.setText(member.getEmail());
         info_gender.setText(member.getGender());
         info_birthday.setText(member.getBirthday());
+    }
+
+    private void handleDoubleClick(Member member) {
+        setup(member);
 
         pane1.setVisible(false);
         pane2.setVisible(true);
@@ -160,6 +198,7 @@ public class Member_controller implements Initializable {
     public void updateTableView() {
         ObservableList<Member> members = FXCollections.observableArrayList(Member_controller.getMember());
         tableView.setItems(members);
+        total_members();
     }
 
     public static List<Member> getMember() {
@@ -185,6 +224,28 @@ public class Member_controller implements Initializable {
         return members;
     }
 
+    public static List<Temp> getTemp(String id) {
+        List<Temp> temps = new ArrayList<>();
+        String sql = "SELECT * FROM borrow WHERE member_id = ? ORDER BY borrow_date DESC";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, id); // Gán giá trị tham số
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String ID = resultSet.getString("id");
+                String name = resultSet.getString("book_name");
+                String borrowDate = resultSet.getString("borrow_date");
+                String returnDate = resultSet.getString("returned_date");
+                String status = resultSet.getString("status");
+
+                temps.add(new Temp(ID, name, borrowDate, returnDate, status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temps;
+    }
+
     public void deleteMember(ActionEvent event) throws IOException {
         SwitchScene sw = new SwitchScene();
         sw.openNewScene(event, "user/Member_Delete.fxml", this);
@@ -206,12 +267,7 @@ public class Member_controller implements Initializable {
     }
 
     public void updatePane2(Member updatedMember) {
-        info_id.setText(updatedMember.getId());
-        info_name.setText(updatedMember.getFirstname() + ' ' + updatedMember.getLastname());
-        info_phone.setText(updatedMember.getPhone());
-        info_email.setText(updatedMember.getEmail());
-        info_gender.setText(updatedMember.getGender());
-        info_birthday.setText(updatedMember.getBirthday());
+        setup(updatedMember);
     }
 
     public void selectItemInSgList() {
@@ -236,6 +292,22 @@ public class Member_controller implements Initializable {
                 currentMember = selectedMember;
                 handleDoubleClick(member);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+        }
+    }
+
+    public void total_members() {
+        String sql = "SELECT COUNT(member_id) as total FROM members";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement count = connection.prepareStatement(sql)) {
+
+            ResultSet resultSet = count.executeQuery(); // Thực hiện truy vấn và nhận kết quả
+
+            resultSet.next();
+            num_of_mem.setText(resultSet.getString("total") + " members");
 
         } catch (SQLException e) {
             e.printStackTrace();
