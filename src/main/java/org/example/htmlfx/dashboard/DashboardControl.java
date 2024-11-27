@@ -10,11 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.user.Member;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +29,14 @@ public class DashboardControl {
     private LineChart<?, ?> lineChart;
     @FXML
     private Label getIncome;
+
     @FXML
     public void initialize() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         borrowedTimes.setCellValueFactory(new PropertyValueFactory<>("borrowedTimes"));
 
-        ObservableList<MostBorrowed> data= FXCollections.observableArrayList(DashboardControl.getBorrowed());
+        ObservableList<MostBorrowed> data = FXCollections.observableArrayList(DashboardControl.getBorrowed());
         tableView.setItems(data);
         setLineChart();
         setIncome();
@@ -64,32 +63,56 @@ public class DashboardControl {
 
     @FXML
     private void setLineChart() {
-        XYChart.Series series = new XYChart.Series();
-        series.getData().add(new XYChart.Data("Mon",20));
-        series.getData().add(new XYChart.Data("Tue",40));
-        series.getData().add(new XYChart.Data("Wed",60));
-        series.getData().add(new XYChart.Data("Thu",50));
-        series.getData().add(new XYChart.Data("Fri",10));
-        series.getData().add(new XYChart.Data("Sat",20));
-        series.getData().add(new XYChart.Data("Sun",30));
+        XYChart.Series series = new XYChart.Series<>();
+        series.setName("Borrow Count");
+        String query = """
+                    SELECT 
+                        DAYNAME(DATE(borrow_date)) AS day_name, 
+                        COUNT(*) AS borrow_count
+                    FROM borrow
+                    WHERE borrow_date BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE()
+                    GROUP BY borrow_date
+                    ORDER BY DATE(borrow_date);
+                """;
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            // Duyệt qua ResultSet để thêm dữ liệu vào series
+            while (rs.next()) {
+                String dayName = rs.getString("day_name"); // Tên thứ
+                int borrowCount = rs.getInt("borrow_count"); // Số lượt mượn
+
+                // Thêm dữ liệu vào series
+                series.getData().add(new XYChart.Data<>(dayName, borrowCount));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Thêm series vào LineChart
+        lineChart.getData().clear(); // Xóa dữ liệu cũ (nếu có)
         lineChart.getData().add(series);
+    }
+
+    private void setIncome() {
+        double totalPayment = 0.0;
+        String sql = "SELECT SUM(price) AS total_payment FROM payment";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            if (resultSet.next()) {
+                totalPayment = resultSet.getDouble("total_payment");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi truy vấn tổng giá trị payment: " + e.getMessage());
+            e.printStackTrace();
+        }
+        getIncome.setText(String.valueOf(totalPayment) + "$");
 
     }
-     private void setIncome() {
-             double totalPayment = 0.0;
-             String sql = "SELECT SUM(price) AS total_payment FROM payment";
 
-             try (Connection connection = DatabaseConnection.getConnection();
-                  Statement statement = connection.createStatement();
-                  ResultSet resultSet = statement.executeQuery(sql)) {
-                 if (resultSet.next()) {
-                     totalPayment = resultSet.getDouble("total_payment");
-                 }
-             } catch (SQLException e) {
-                 System.err.println("Lỗi khi truy vấn tổng giá trị payment: " + e.getMessage());
-                 e.printStackTrace();
-             }
-             getIncome.setText(String.valueOf(totalPayment)+"$");
-
-     }
 }

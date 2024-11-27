@@ -14,7 +14,8 @@ public class StartApplication extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("user/Members.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("book/Book.fxml"));
         //Parent root = FXMLLoader.load(getClass().getResource("borrow/Borrow.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("income/Income.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("income/Income.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
         Scene scene = new Scene(root);  // Đặt kích thước cửa sổ
         stage.setScene(scene);
         stage.show();

@@ -1,5 +1,6 @@
 package org.example.htmlfx.book;
 
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -49,6 +50,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import static org.example.htmlfx.toolkits.Alert.showAlert;
 
 public class BookController implements Initializable {
     public String link = "https://www.facebook.com/kieuvantuyen01";
@@ -100,7 +102,7 @@ public class BookController implements Initializable {
 
     private MyClicked myClicked;
     SearchBar searchBar = new SearchBar();
-    private StringProperty querry = new SimpleStringProperty("Shin");
+    private StringProperty querry = new SimpleStringProperty("OOP");
     public Book recentlybook;
 
     public StringProperty querryProperty() {
@@ -142,10 +144,11 @@ public class BookController implements Initializable {
                 setDataShowBook(book);
                 showBook.setVisible(true);
                 scrollBook.setVisible(false);
-                link = book.getDownloadLink();
+                link = book.getPreviewLink();
                 quantity_in_Stock_Book(book.getAuthors());
                 recentlybook = book;
                 System.out.println(recentlybook.getbookmark());
+                quantity_in_Stock_Book(recentlybook.getbookmark());
             }
         };
         try {
@@ -243,14 +246,14 @@ public class BookController implements Initializable {
     }
 
     private void downloadBook(Book book) {
-        if (book.getDownloadLink() != null && !book.getDownloadLink().isEmpty()) {
+        if (book.getPreviewLink() != null && !book.getPreviewLink().isEmpty()) {
             try {
-                Desktop.getDesktop().browse(URI.create(book.getDownloadLink()));
+                Desktop.getDesktop().browse(URI.create(book.getPreviewLink()));
             } catch (Exception e) {
                 System.out.println("Error downloading book: " + e.getMessage());
             }
         } else {
-            showAlert("Download Not Available", "This book does not have a download link.");
+            supershowAlert("Download Not Available", "This book does not have a download link.");
         }
     }
 
@@ -351,7 +354,7 @@ public class BookController implements Initializable {
     }
 
 
-    private void showAlert(String title, String content) {
+    private void supershowAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(title);
         alert.setContentText(content);
@@ -368,7 +371,7 @@ public class BookController implements Initializable {
             querry.set(query);  // Cập nhật querry nếu có giá trị
             updateBooks(query); // Gọi updateBooks để tải lại danh sách sách
         } else {
-            showAlert("Input Error", "Please enter a search term.");
+            supershowAlert("Input Error", "Please enter a search term.");
         }
 
     }
@@ -418,21 +421,21 @@ public class BookController implements Initializable {
         primaryStage.show();
     }
 
-    public void quantity_in_Stock_Book(String bookmard) {
-        String query = "SELECT quantity_in_store FROM books WHERE book_id = ?";
+    public void quantity_in_Stock_Book(String bookmark) {
+        String query = "SELECT remaining_quantity FROM books WHERE bookmark = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Truyền tham số vào câu truy vấn
-            statement.setString(1, bookmard);
+            statement.setString(1,bookmark);
 
             // Thực hiện truy vấn
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 // Nếu tìm thấy sách, in ra số lượng
-                int quantity = resultSet.getInt("book_id");
+                int quantity = resultSet.getInt("remaining_quantity");
                 stocklabel.setText("Book is available. Quantity: " + quantity);
             } else {
                 // Nếu không tìm thấy sách
@@ -449,6 +452,7 @@ public class BookController implements Initializable {
         amount = Integer.parseInt(amountBook.getText());
         Connection connection = DatabaseConnection.getConnection();
         addBookToDatabase(connection, recentlybook,amount);
+        showAlert(Alert.AlertType.INFORMATION,"Notice","Add Book to Library Successfully.");
 
     }
 

@@ -1,4 +1,4 @@
-package org.example.htmlfx.dashboard;
+package org.example.htmlfx;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;
@@ -52,7 +52,7 @@ public class SceneController {
 
     public void handleSwitchScene(ActionEvent event) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("Scene1.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("dashboard/Dashboard.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
