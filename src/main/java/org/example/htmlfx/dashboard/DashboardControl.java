@@ -1,5 +1,6 @@
 package org.example.htmlfx.dashboard;
 
+import com.almasb.fxgl.notification.NotificationService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.htmlfx.toolkits.DatabaseConnection;
-import org.example.htmlfx.user.Member;
+import javafx.scene.control.ListView;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class DashboardControl {
     private Label getIncome;
 
     @FXML
+    private ListView<Notification> notificationListView;
+
+    private Notification_Service notificationService = new Notification_Service();
+
+    @FXML
     public void initialize() {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -40,7 +46,26 @@ public class DashboardControl {
         tableView.setItems(data);
         setLineChart();
         setIncome();
+
+        notificationService.start();
+        notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
+        notificationListView.setVisible(false);
     }
+
+    @FXML
+    private void checkNotification() {
+        // Kiểm tra trạng thái hiện tại của ListView
+        if (notificationListView.isVisible()) {
+            // Nếu ListView đang hiển thị, ẩn nó đi
+            notificationListView.setVisible(false);
+        } else {
+            // Nếu ListView đang bị ẩn, hiển thị nó và cập nhật nội dung
+            ObservableList<Notification> notifications = FXCollections.observableArrayList(notificationService.getNotifications());
+            notificationListView.setItems(notifications);
+            notificationListView.setVisible(true);
+        }
+    }
+
 
     public static List<MostBorrowed> getBorrowed() {
         List<MostBorrowed> mostBorrowed = new ArrayList<>();
