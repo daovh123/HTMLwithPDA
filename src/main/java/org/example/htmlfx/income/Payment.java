@@ -1,6 +1,4 @@
-package org.example.htmlfx.menu;
-
-import javafx.beans.property.SimpleStringProperty;
+package org.example.htmlfx.income;
 
 public class Payment {
     private String id;
@@ -8,6 +6,9 @@ public class Payment {
     private String book_id;
     private String price;
     private String order_date;
+
+    public Payment() {
+    }
 
     public Payment(String id, String member_id, String book_id, String price, String order_date) {
         this.id = id;

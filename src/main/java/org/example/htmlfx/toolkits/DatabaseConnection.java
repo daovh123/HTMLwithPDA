@@ -1,14 +1,14 @@
-package org.example.htmlfx;
+package org.example.htmlfx.toolkits;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Driver;
+
 public class DatabaseConnection {
     public static Connection databaseLink;
 
     public static Connection getConnection() {
         String databaseName = "library_management";
         String databaseUser = "root";
-        String databasePassword = "123456";
+        String databasePassword = "423015";
         String databaseUrl = "jdbc:mysql://localhost:3306/" + databaseName;
 
         try{

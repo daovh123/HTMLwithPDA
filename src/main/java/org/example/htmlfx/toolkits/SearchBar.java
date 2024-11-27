@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.toolkits;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.*;
+import org.example.htmlfx.income.Income_Control;
 import org.example.htmlfx.user.Member_controller;
 
 public class SearchBar {
@@ -113,6 +114,36 @@ public class SearchBar {
 
 
     public void setupSearchFieldForDatabase(TextField searchField, ListView<String> suggestionList, Member_controller controller) {
+        // Xử lý sự kiện khi người dùng nhập vào TextField
+        searchField.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            String query = searchField.getText().trim();
+            if (query.isEmpty()) {
+                suggestionList.setVisible(false); // Ẩn khi không có văn bản
+            } else {
+                List<String> suggestions = fetchMemberIDFromDatabase(query);
+                if (!suggestions.isEmpty()) {
+                    updateSuggestions(suggestions, suggestionList);
+                } else {
+                    suggestionList.setVisible(false);
+                }
+            }
+        });
+
+        // Chọn một gợi ý khi người dùng click vào
+        suggestionList.setOnMouseClicked(event -> {
+            String selectedItem = suggestionList.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                searchField.setText(selectedItem); // Điền vào TextField
+                suggestionList.setVisible(false); // Ẩn danh sách gợi ý
+
+                // Gọi phương thức selectItemInSgList trong controller
+                controller.selectItemInSgList();
+                searchField.setText("");
+            }
+        });
+    }
+
+    public void setupSearchFieldForDatabase(TextField searchField, ListView<String> suggestionList, Income_Control controller) {
         // Xử lý sự kiện khi người dùng nhập vào TextField
         searchField.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
             String query = searchField.getText().trim();

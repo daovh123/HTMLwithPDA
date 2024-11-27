@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="695.0" prefWidth="951.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.borrow.Borrow_controller">
    <children>
       <Pane prefHeight="695.0" prefWidth="200.0" />
-      <Pane fx:id="pane1" layoutX="200.0" layoutY="14.0" prefHeight="621.0" prefWidth="675.0">
+      <Pane fx:id="pane1" layoutX="200.0" layoutY="14.0" prefHeight="621.0" prefWidth="675.0" visible="false">
          <children>
             <TableView fx:id="table_of_borrow" layoutY="194.0" prefHeight="427.0" prefWidth="675.0">
               <columns>
@@ -65,7 +65,7 @@
             <Button layoutX="620.0" layoutY="153.0" mnemonicParsing="false" onAction="#addBorrow" text="ADD" />
          </children>
       </Pane>
-      <Pane fx:id="pane2" layoutX="209.0" layoutY="83.0" prefHeight="559.0" prefWidth="603.0">
+      <Pane fx:id="pane2" layoutX="209.0" layoutY="83.0" prefHeight="559.0" prefWidth="603.0" visible="false">
          <children>
             <Pane layoutX="14.0" layoutY="39.0" prefHeight="160.0" prefWidth="421.0">
                <children>

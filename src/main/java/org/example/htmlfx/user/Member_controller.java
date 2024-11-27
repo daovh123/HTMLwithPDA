@@ -11,8 +11,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
-import org.example.htmlfx.DatabaseConnection;
-import org.example.htmlfx.SearchBar;
+import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.toolkits.SearchBar;
 import org.example.htmlfx.SwitchScene;
 import org.example.htmlfx.borrow.Temp;
 
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.example.htmlfx.Alert.showAlert;
+import static org.example.htmlfx.toolkits.Alert.showAlert;
 
 public class Member_controller implements Initializable {
     @FXML
@@ -291,6 +291,8 @@ public class Member_controller implements Initializable {
                 selectedMember = member;
                 currentMember = selectedMember;
                 handleDoubleClick(member);
+                ObservableList<Temp> temps = FXCollections.observableArrayList(Member_controller.getTemp(searchID.getText()));
+                tableInfo.setItems(temps);
             }
 
         } catch (SQLException e) {

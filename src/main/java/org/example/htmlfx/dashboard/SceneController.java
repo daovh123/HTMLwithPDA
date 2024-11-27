@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.dashboard;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.StackPane;

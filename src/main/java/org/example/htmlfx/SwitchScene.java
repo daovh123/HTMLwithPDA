@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.htmlfx.toolkits.ParentControllerAware;
 import org.example.htmlfx.user.Member_controller;
 
 import java.io.IOException;

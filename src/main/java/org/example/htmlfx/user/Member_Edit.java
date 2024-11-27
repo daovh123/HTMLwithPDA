@@ -6,15 +6,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.htmlfx.DatabaseConnection;
-import org.example.htmlfx.ParentControllerAware;
+import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.toolkits.ParentControllerAware;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.example.htmlfx.Alert.showAlert;
-import static org.example.htmlfx.Checked.*;
+import static org.example.htmlfx.toolkits.Alert.showAlert;
+import static org.example.htmlfx.toolkits.Checked.*;
 
 public class Member_Edit implements ParentControllerAware {
     private Member_controller parentController;

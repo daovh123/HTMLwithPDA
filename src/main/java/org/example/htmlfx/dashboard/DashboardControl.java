@@ -9,8 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.example.htmlfx.DatabaseConnection;
-import org.example.htmlfx.user.Member;
+import org.example.htmlfx.toolkits.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

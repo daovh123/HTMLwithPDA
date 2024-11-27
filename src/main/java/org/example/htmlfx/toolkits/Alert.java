@@ -1,4 +1,4 @@
-package org.example.htmlfx;
+package org.example.htmlfx.toolkits;
 
 public class Alert {
     public static void showAlert(javafx.scene.control.Alert.AlertType alertType, String title, String message) {
