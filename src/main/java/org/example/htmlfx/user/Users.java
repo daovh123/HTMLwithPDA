@@ -10,6 +10,7 @@ public class Users {
     private String birthday;
     private String email;
     private String phone;
+    private String image;
 
     public Users() {}
 
@@ -21,6 +22,17 @@ public class Users {
         this.birthday = birthday;
         this.email = email;
         this.phone = phone;
+    }
+
+    public Users(String id, String firstname, String lastname, String gender, String birthday, String email, String phone, String image) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.email = email;
+        this.phone = phone;
+        this.image = image;
     }
 
     public String getId() { return id;}
@@ -75,5 +87,13 @@ public class Users {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

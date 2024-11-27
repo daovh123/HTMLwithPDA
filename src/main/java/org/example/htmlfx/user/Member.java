@@ -15,6 +15,10 @@ public class Member extends Users {
         super();
     }
 
+    public Member(String id, String firstname, String lastname, String gender, String birthday, String email, String phone, String image) {
+        super(id, firstname, lastname, gender, birthday, email, phone, image);
+    }
+
     public Member(String id, String firstname, String lastname, String gender, String birthday, String email, String phone) {
         super(id, firstname, lastname, gender, birthday, email, phone);
     }

@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -91,6 +93,9 @@ public class Member_controller implements Initializable {
 
     @FXML
     private Text info_phone;
+
+    @FXML
+    private ImageView image;
 
     @FXML
     private Text num_of_mem;
@@ -181,6 +186,10 @@ public class Member_controller implements Initializable {
         info_email.setText(member.getEmail());
         info_gender.setText(member.getGender());
         info_birthday.setText(member.getBirthday());
+
+        String path = getClass().getResource(member.getImage()).toExternalForm();
+        Image temp = new Image(path);
+        image.setImage(temp);
     }
 
     private void handleDoubleClick(Member member) {
@@ -215,8 +224,9 @@ public class Member_controller implements Initializable {
                 String birthday = resultSet.getString("birth");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
+                String imame = resultSet.getString("image");
 
-                members.add((new Member(id, firstName, lastName, gender, birthday, email, phone)));
+                members.add((new Member(id, firstName, lastName, gender, birthday, email, phone, imame)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

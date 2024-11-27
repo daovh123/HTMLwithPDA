@@ -12,6 +12,7 @@ CREATE TABLE members (
     birth DATE,
     email VARCHAR(100),
     phone VARCHAR(15),
+    image VARCHAR(100),
     PRIMARY KEY (member_id)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE admins (
     birth DATE,
     email VARCHAR(100),
     phone VARCHAR(15),
+    image VARCHAR(100),
     PRIMARY KEY (admin_id)
 );
 
@@ -89,6 +91,7 @@ FOR EACH ROW
 BEGIN
     INSERT INTO member_id_counter () VALUES ();
     SET NEW.member_id = LPAD(LAST_INSERT_ID(), 6, '0');
+    SET NEW.image = CONCAT('/img/avt/member/image', FLOOR(1 + RAND() * 10), '.jpg');
 END$$
 
 DELIMITER ;
@@ -368,12 +371,3 @@ VALUES
 call insert_random_borrows();
 
 call insert_random_payment();
-
-update borrow
-    set returned_date = '2024-11-20'
-    where member_id = 000012 and book_id = 'B004';
-
-
-select member_id, count(*) as total
-    from borrow
-    group by member_id;
