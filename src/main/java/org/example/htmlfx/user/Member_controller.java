@@ -224,9 +224,9 @@ public class Member_controller implements Initializable {
                 String birthday = resultSet.getString("birth");
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
-                String imame = resultSet.getString("image");
+                String image = resultSet.getString("image");
 
-                members.add((new Member(id, firstName, lastName, gender, birthday, email, phone, imame)));
+                members.add((new Member(id, firstName, lastName, gender, birthday, email, phone, image)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -297,6 +297,7 @@ public class Member_controller implements Initializable {
                 member.setBirthday(resultSet.getString("birth"));
                 member.setFirstname(resultSet.getString("firstname"));
                 member.setLastname(resultSet.getString("lastname"));
+                member.setImage(resultSet.getString("image"));
 
                 selectedMember = member;
                 currentMember = selectedMember;

@@ -17,6 +17,7 @@ module org.example.htmlfx {
     requires java.net.http;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires javafx.media;
 
     // Xuất các gói cần thiết cho module khác
     exports org.example.htmlfx;

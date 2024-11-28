@@ -453,6 +453,8 @@ public class BookController implements Initializable {
         Connection connection = DatabaseConnection.getConnection();
         addBookToDatabase(connection, recentlybook,amount);
         showAlert(Alert.AlertType.INFORMATION,"Notice","Add Book to Library Successfully.");
+        amountBook.setText("");
+        quantity_in_Stock_Book(recentlybook.getbookmark());
 
     }
 

@@ -10,12 +10,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import org.example.htmlfx.toolkits.DatabaseConnection;
 import javafx.scene.control.ListView;
-
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.layout.VBox;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class DashboardControl {
     @FXML
@@ -30,9 +40,14 @@ public class DashboardControl {
     private LineChart<?, ?> lineChart;
     @FXML
     private Label getIncome;
-
+    @FXML
+    AnchorPane toolbar_Pane;
     @FXML
     private ListView<Notification> notificationListView;
+    @FXML
+    private ImageView settingButton;
+
+    private Music music = new Music();
 
     private Notification_Service notificationService = new Notification_Service();
 
@@ -46,7 +61,7 @@ public class DashboardControl {
         tableView.setItems(data);
         setLineChart();
         setIncome();
-
+        music.play();
         notificationService.start();
         notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
         notificationListView.setVisible(false);
@@ -138,6 +153,65 @@ public class DashboardControl {
         }
         getIncome.setText(String.valueOf(totalPayment) + "$");
 
+    }
+
+    public void SettingHandle(MouseEvent mouseEvent) {
+        // Tạo nút bật/tắt nhạc
+        Button togglePlayButton = new Button("▶ Play");
+        togglePlayButton.setStyle("-fx-font-size: 16px; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 10px;");
+        togglePlayButton.setOnAction(e -> {
+            if (music.isPlaying()) {
+                music.pause();
+                togglePlayButton.setText("▶ Play");
+                togglePlayButton.setStyle("-fx-font-size: 16px; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+            } else {
+                music.play();
+                togglePlayButton.setText("⏸ Pause");
+                togglePlayButton.setStyle("-fx-font-size: 16px; -fx-background-color: #f44336; -fx-text-fill: white;");
+            }
+        });
+
+        // Nút Tắt tiếng
+        Button muteButton = new Button("🔇 Mute");
+        muteButton.setStyle("-fx-font-size: 16px; -fx-background-color: #ff9800; -fx-text-fill: white; -fx-padding: 10px;");
+        muteButton.setOnAction(e -> {
+            if (music.getVolume() > 0) {
+                music.setVolume(0);
+                muteButton.setText("🔊 Unmute");
+            } else {
+                music.setVolume(0.5); // Đặt âm lượng về mức 50% sau khi bật lại
+                muteButton.setText("🔇 Mute");
+            }
+        });
+
+        // Tạo slider điều chỉnh âm lượng
+        Label volumeLabel = new Label("Volume: 50%");
+        volumeLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #333;");
+        Slider volumeSlider = new Slider(0, 1, 0.5);
+        volumeSlider.setShowTickLabels(true);
+        volumeSlider.setShowTickMarks(true);
+        volumeSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            music.setVolume(newValue.doubleValue());
+            volumeLabel.setText("Volume: " + Math.round(newValue.doubleValue() * 100) + "%");
+        });
+
+        // Tạo nhãn tiêu đề
+        Label titleLabel = new Label("🎵 Music Player 🎵");
+        titleLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;");
+
+        // Căn chỉnh bố cục
+        VBox root = new VBox(20, titleLabel, togglePlayButton, muteButton, volumeLabel, volumeSlider);
+        root.setPadding(new Insets(20));
+        root.setAlignment(Pos.CENTER);
+        root.setStyle("-fx-background-color: linear-gradient(to bottom, #ffffff, #f1f1f1); -fx-border-color: #ccc; -fx-border-width: 2px; -fx-border-radius: 10px; -fx-background-radius: 10px;");
+
+        // Tạo Scene và thiết lập Stage
+        Scene scene = new Scene(root, 400, 350);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Music Control Settings");
+        stage.setOnCloseRequest(e -> music.dispose());
+        stage.show();
     }
 
 }

@@ -10,8 +10,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.SceneController">
    <children>
-   
-         <!-- Left Section: Sign In -->
+
+      <!-- Left Section: Sign In -->
       <StackPane fx:id="stackPaneLeft" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: none;">
          <VBox id="signInVbox" fx:id="signInVbox" alignment="CENTER" prefHeight="646.0" prefWidth="400.0" spacing="20" style="-fx-padding: 40;">
             <Label style="-fx-text-fill: #4252B4; -fx-font-size: 24px; -fx-font-weight: bold;" text="Sign In" />
@@ -30,8 +30,8 @@
             </children>
          </VBox>
       </StackPane>
-   
-         <!-- Right Section: hello, Friend -->
+
+      <!-- Right Section: hello, Friend -->
       <StackPane fx:id="stackPaneRight" layoutX="500.0" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color:#4252B4;">
          <VBox id="HelloVbox" fx:id="HelloVbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="368.0" spacing="20">
             <Label style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" text="Hello, welcome to HTML" />

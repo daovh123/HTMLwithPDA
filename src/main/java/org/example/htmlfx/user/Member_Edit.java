@@ -100,6 +100,7 @@ public class Member_Edit implements ParentControllerAware {
             String newBirthday = info_birthday.getText();
             String newEmail = info_email.getText();
             String newPhone = info_phone.getText();
+            String image = edittingMember.getImage();
 
             updateMemberStatement.setString(1, newFirstname);
             updateMemberStatement.setString(2, newLastname);
@@ -122,7 +123,7 @@ public class Member_Edit implements ParentControllerAware {
 
                 // Cập nhật pane2 với thông tin mới nếu parentController không null
                 if (parentController != null) {
-                    Member updatedMember = new Member(id, newFirstname, newLastname, newGender, newBirthday, newEmail, newPhone);
+                    Member updatedMember = new Member(id, newFirstname, newLastname, newGender, newBirthday, newEmail, newPhone, image);
                     parentController.updatePane2(updatedMember);
                 }
             } else {

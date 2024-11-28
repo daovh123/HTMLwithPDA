@@ -203,6 +203,8 @@ public class Borrow_controller implements Initializable {
         pane1.setVisible(true);
         pane2.setVisible(false);
 
+        updateTableOfBorrow();
+
         resetData();
     }
 
@@ -342,6 +344,10 @@ public class Borrow_controller implements Initializable {
     private void addBorrow() {
         pane1.setVisible(false);
         pane2.setVisible(true);
+
+        year.setText("");
+        month.setText("");
+        day.setText("");
     }
 
     private void resetData() {

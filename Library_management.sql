@@ -36,6 +36,7 @@ CREATE TABLE admins (
 );
 
 CREATE TABLE books (
+    bookmark VARCHAR(45),
     book_id VARCHAR(10) NOT NULL,
     book_name VARCHAR(45),
     book_author VARCHAR(45),
@@ -45,6 +46,11 @@ CREATE TABLE books (
     borrowing INT DEFAULT 0,
     remaining_quantity INT,
     PRIMARY KEY (book_id)
+);
+
+CREATE TABLE book_id_counter (
+    id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE borrow (
@@ -111,6 +117,14 @@ BEFORE UPDATE ON books
 FOR EACH ROW
 BEGIN
     SET NEW.remaining_quantity = NEW.quantity_in_store - NEW.borrowing;
+END$$
+
+CREATE TRIGGER before_insert_book
+BEFORE INSERT ON books
+FOR EACH ROW
+BEGIN
+    INSERT INTO book_id_counter () VALUES ();
+    SET NEW.book_id = CONCAT('B0', LPAD(LAST_INSERT_ID(), 2, '0'));
 END$$
 
 DELIMITER ;
@@ -345,28 +359,28 @@ VALUES
 ('Mason', 'Lee', 'Male', '1988-08-01', 'mason.lee@gmail.com', '0123456781'),
 ('Amelia', 'Walker', 'Female', '1985-04-07', 'amelia.walker@gmail.com', '0987654329');
 
-INSERT INTO books (book_id, book_name, book_author, price, quantity_in_store)
+INSERT INTO books (book_name, book_author, price, quantity_in_store)
 VALUES
-('B001', 'To Kill a Mockingbird', 'Harper Lee', 150.0, 50),
-('B002', '1984', 'George Orwell', 120.0, 40),
-('B003', 'Pride and Prejudice', 'Jane Austen', 100.0,  30),
-('B004', 'The Great Gatsby', 'F. Scott Fitzgerald', 130.0, 60),
-('B005', 'Moby Dick', 'Herman Melville', 170.0, 25),
-('B006', 'War and Peace', 'Leo Tolstoy', 200.0, 20),
-('B007', 'The Odyssey', 'Homer', 180.0,  35),
-('B008', 'The Catcher in the Rye', 'J.D. Salinger', 140.0,  25),
-('B009', 'Animal Farm', 'George Orwell', 110.0,  50),
-('B010', 'The Lord of the Rings', 'J.R.R. Tolkien', 300.0, 20),
-('B011', 'Harry Potter and the Philosopher\'s Stone', 'J.K. Rowling', 250.0,  100),
-('B012', 'The Alchemist', 'Paulo Coelho', 190.0,  70),
-('B013', 'Don Quixote', 'Miguel de Cervantes', 220.0,  15),
-('B014', 'Jane Eyre', 'Charlotte Brontë', 150.0, 40),
-('B015', 'The Book Thief', 'Markus Zusak', 170.0,  60),
-('B016', 'The Hobbit', 'J.R.R. Tolkien', 190.0,  30),
-('B017', 'Fahrenheit 451', 'Ray Bradbury', 120.0,  25),
-('B018', 'Brave New World', 'Aldous Huxley', 150.0,  35),
-('B019', 'The Kite Runner', 'Khaled Hosseini', 180.0,  50),
-('B020', 'The Hunger Games', 'Suzanne Collins', 200.0,  70);
+('To Kill a Mockingbird', 'Harper Lee', 150.0, 50),
+('1984', 'George Orwell', 120.0, 40),
+('Pride and Prejudice', 'Jane Austen', 100.0,  30),
+('The Great Gatsby', 'F. Scott Fitzgerald', 130.0, 60),
+('Moby Dick', 'Herman Melville', 170.0, 25),
+( 'War and Peace', 'Leo Tolstoy', 200.0, 20),
+('The Odyssey', 'Homer', 180.0,  35),
+( 'The Catcher in the Rye', 'J.D. Salinger', 140.0,  25),
+( 'Animal Farm', 'George Orwell', 110.0,  50),
+('The Lord of the Rings', 'J.R.R. Tolkien', 300.0, 20),
+('Harry Potter and the Philosopher\'s Stone', 'J.K. Rowling', 250.0,  100),
+( 'The Alchemist', 'Paulo Coelho', 190.0,  70),
+( 'Don Quixote', 'Miguel de Cervantes', 220.0,  15),
+( 'Jane Eyre', 'Charlotte Brontë', 150.0, 40),
+( 'The Book Thief', 'Markus Zusak', 170.0,  60),
+('The Hobbit', 'J.R.R. Tolkien', 190.0,  30),
+('Fahrenheit 451', 'Ray Bradbury', 120.0,  25),
+( 'Brave New World', 'Aldous Huxley', 150.0,  35),
+('The Kite Runner', 'Khaled Hosseini', 180.0,  50),
+('The Hunger Games', 'Suzanne Collins', 200.0,  70);
 
 call insert_random_borrows();
 
