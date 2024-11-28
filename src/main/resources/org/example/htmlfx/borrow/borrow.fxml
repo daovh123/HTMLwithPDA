@@ -298,8 +298,8 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </HBox>
-                  <Button layoutX="828.0" layoutY="45.0" mnemonicParsing="false" onAction="#update_filter" prefHeight="33.0" prefWidth="110.0" style="-fx-background-color: white;" styleClass="button1" stylesheets="@../Makecolor.css" text="Filter" />
-                  <Button layoutX="46.0" layoutY="45.0" mnemonicParsing="false" onAction="#addBorrow" prefHeight="33.0" prefWidth="123.0" styleClass="button0" stylesheets="@../Makecolor.css" text="ADD" />
+                  <Button layoutX="828.0" layoutY="45.0" mnemonicParsing="false" onAction="#update_filter" prefHeight="33.0" prefWidth="110.0" styleClass="button1" stylesheets="@../Makecolor.css" text="Filter" />
+                  <Button layoutX="46.0" layoutY="45.0" mnemonicParsing="false" onAction="#addBorrow" prefHeight="33.0" prefWidth="123.0" styleClass="button0" stylesheets="@../Makecolor.css" text="Add" />
                </children>
                <opaqueInsets>
                   <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />

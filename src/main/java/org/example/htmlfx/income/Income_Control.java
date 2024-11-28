@@ -101,12 +101,17 @@ public class Income_Control implements Initializable {
     @FXML
     private TextField quantity_field;
 
+    @FXML
+    private Text amount;
+
+    private double value;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         id_purchase.setCellValueFactory(new PropertyValueFactory<>("id"));
         id_member.setCellValueFactory(new PropertyValueFactory<>("member_id"));
         id_book.setCellValueFactory(new PropertyValueFactory<>("book_id"));
-        payment.setCellValueFactory(new PropertyValueFactory<>("price"));
+        payment.setCellValueFactory(new PropertyValueFactory<>("payment"));
         date.setCellValueFactory(new PropertyValueFactory<>("order_date"));
 
         ObservableList<Payment> data= FXCollections.observableArrayList(Income_Control.getIncome());
@@ -118,6 +123,8 @@ public class Income_Control implements Initializable {
         member_field.setOnAction(event -> getInfoMember());
 
         book_field.setOnAction(event -> getInfoBook());
+
+        quantity_field.setOnAction(event -> getTotal());
 
         pane1.setVisible(true);
         pane2.setVisible(false);
@@ -134,9 +141,9 @@ public class Income_Control implements Initializable {
                 String id = resultSet.getString("id");
                 String memberid = resultSet.getString("member_id");
                 String bookid = resultSet.getString("book_id");
-                String payment = resultSet.getString("price");
+                String payment = resultSet.getString("payment");
                 String date = resultSet.getString("order_date");
-                payments.add(new Payment(id, memberid, bookid,payment,date));
+                payments.add(new Payment(id, memberid, bookid, payment, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -194,6 +201,13 @@ public class Income_Control implements Initializable {
         }
     }
 
+    private void getTotal() {
+        String total = quantity_field.getText();
+        int temp = Integer.parseInt(total);
+        double res = temp * value;
+        amount.setText(String.valueOf(res) + "00 VND");
+    }
+
     private void setupMember(ResultSet rs) throws SQLException {
         info_id.setText(rs.getString("member_id") != null ? rs.getString("member_id") : "N/A");
         info_name.setText(rs.getString("firstname") + " " + rs.getString("lastname"));
@@ -204,7 +218,12 @@ public class Income_Control implements Initializable {
     }
 
     private void setupBook(ResultSet rs) throws SQLException {
-        bookname.setText(rs.getString("book_name"));
+        String name = rs.getString("book_name");
+        String price = rs.getString("price");
+        String res = "Name: " + name + "\nPrice: " + price + "00 VND";
+        bookname.setText(res);
+
+        value = rs.getDouble("price");
     }
 
     public void selectItemInSgList() {

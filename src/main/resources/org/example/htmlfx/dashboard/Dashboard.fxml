@@ -129,12 +129,12 @@
             </Pane>
             <Pane id="bg1" layoutX="38.0" layoutY="173.0" prefHeight="91.0" prefWidth="200.0" styleClass="pane0" stylesheets="@../Makecolor.css">
                <children>
-                  <Text fill="#8c8888c9" layoutX="20.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
+                  <Text fill="#8c8888c9" layoutX="80.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Income">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Text>
-                  <Label fx:id="getIncome" layoutX="21.0" layoutY="14.0" prefHeight="40.0" prefWidth="164.0" text="1000000$">
+                  <Label fx:id="getIncome" alignment="CENTER" layoutX="21.0" layoutY="26.0" prefHeight="40.0" prefWidth="164.0" text="1000000$">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -142,7 +142,16 @@
                </children></Pane>
             <Pane layoutX="371.0" layoutY="174.0" prefHeight="90.0" prefWidth="200.0" styleClass="pane0" stylesheets="@../Makecolor.css">
                <children>
-                  <Text layoutX="31.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Số lượt mượn hôm nay" />
+                  <Text fill="#8c8888c9" layoutX="51.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Borrowed today">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="getBorrow" alignment="CENTER" layoutX="18.0" layoutY="25.0" prefHeight="40.0" prefWidth="164.0" text="5">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children></Pane>
             <Text fill="#020933" layoutX="38.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
                <font>

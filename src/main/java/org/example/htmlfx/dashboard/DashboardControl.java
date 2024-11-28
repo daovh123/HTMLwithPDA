@@ -1,6 +1,5 @@
 package org.example.htmlfx.dashboard;
 
-import com.almasb.fxgl.notification.NotificationService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,6 +21,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import org.example.htmlfx.toolkits.Music;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class DashboardControl {
     private ListView<Notification> notificationListView;
     @FXML
     private ImageView settingButton;
+    @FXML
+    private Label getBorrow;
 
     private Music music = new Music();
 
@@ -61,7 +64,8 @@ public class DashboardControl {
         tableView.setItems(data);
         setLineChart();
         setIncome();
-        music.play();
+        setBorrow();
+        //music.play();
         notificationService.start();
         notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
         notificationListView.setVisible(false);
@@ -151,8 +155,21 @@ public class DashboardControl {
             System.err.println("Lỗi khi truy vấn tổng giá trị payment: " + e.getMessage());
             e.printStackTrace();
         }
-        getIncome.setText(String.valueOf(totalPayment) + "$");
+        getIncome.setText(String.valueOf(totalPayment) + " VND");
+    }
 
+    private void setBorrow() {
+        String sql = "SELECT COUNT(*) AS borrow_count FROM borrow WHERE borrow_date = CURDATE()";
+        try (Connection connection = DatabaseConnection.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+            if (resultSet.next()) {
+                getBorrow.setText(resultSet.getString("borrow_count"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi truy vấn số lượt mượn sách hôm nay: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void SettingHandle(MouseEvent mouseEvent) {

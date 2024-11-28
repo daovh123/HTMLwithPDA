@@ -4,17 +4,17 @@ public class Payment {
     private String id;
     private String member_id;
     private String book_id;
-    private String price;
+    private String payment;
     private String order_date;
 
     public Payment() {
     }
 
-    public Payment(String id, String member_id, String book_id, String price, String order_date) {
+    public Payment(String id, String member_id, String book_id, String payment, String order_date) {
         this.id = id;
         this.member_id = member_id;
         this.book_id = book_id;
-        this.price = price;
+        this.payment = payment;
         this.order_date = order_date;
     }
 
@@ -42,12 +42,12 @@ public class Payment {
         this.member_id = member_id;
     }
 
-    public String getPrice() {
-        return price;
+    public String getPayment() {
+        return payment;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPrice(String payment) {
+        this.payment = payment;
     }
 
     public String getOrder_date() {

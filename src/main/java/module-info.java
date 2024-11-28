@@ -35,4 +35,6 @@ module org.example.htmlfx {
 
     opens org.example.htmlfx.income to javafx.fxml;  // Đổi Dashboard -> dashboard
     opens org.example.htmlfx.borrow to javafx.fxml;
+    exports org.example.htmlfx.toolkits;
+    opens org.example.htmlfx.toolkits to javafx.fxml;
 }
