@@ -1,25 +1,29 @@
 package org.example.htmlfx.borrow;
 
-import org.example.htmlfx.book.Book;
-import org.example.htmlfx.user.Member;
-
-import java.sql.Date;
-
 public class Borrow {
     private String id;
-    private Member borrower;
-    private Book bookBorrowed;
+    private String member_id;
+    private String book_id;
+    private String name;
     private String borrowDate;
     private String returnDate;
     private String status;
 
-    public Borrow() {
+    public Borrow() {}
+
+    public Borrow(String id, String name, String borrowDate, String returnDate, String status) {
+        this.id = id;
+        this.name = name;
+        this.borrowDate = borrowDate;
+        this.returnDate = returnDate;
+        this.status = status;
     }
 
-    public Borrow(String id, Member borrower, Book bookBorrowed, String borrowDate, String returnDate, String status) {
+    public Borrow(String id, String member_id, String book_id, String name, String borrowDate, String returnDate, String status) {
         this.id = id;
-        this.borrower = borrower;
-        this.bookBorrowed = bookBorrowed;
+        this.member_id = member_id;
+        this.book_id = book_id;
+        this.name = name;
         this.borrowDate = borrowDate;
         this.returnDate = returnDate;
         this.status = status;
@@ -33,20 +37,12 @@ public class Borrow {
         this.id = id;
     }
 
-    public Member getBorrower() {
-        return borrower;
+    public String getName() {
+        return name;
     }
 
-    public void setBorrower(Member borrower) {
-        this.borrower = borrower;
-    }
-
-    public Book getBookBorrowed() {
-        return bookBorrowed;
-    }
-
-    public void setBookBorrowed(Book bookBorrowed) {
-        this.bookBorrowed = bookBorrowed;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBorrowDate() {
@@ -61,8 +57,8 @@ public class Borrow {
         return returnDate;
     }
 
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
+    public void setReturnTime(String returnTime) {
+        this.returnDate = returnTime;
     }
 
     public String getStatus() {
@@ -71,5 +67,21 @@ public class Borrow {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
+    }
+
+    public String getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
     }
 }

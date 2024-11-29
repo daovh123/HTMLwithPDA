@@ -88,6 +88,18 @@ CREATE TABLE payment (
         ON DELETE NO ACTION
 );
 
+-- tự động định thêm image cho admin
+DELIMITER $$
+
+CREATE TRIGGER before_insert_admin
+BEFORE INSERT ON admins
+FOR EACH ROW
+BEGIN
+    SET NEW.image = CONCAT('/img/avt/admin/image', FLOOR(1 + RAND() * 3), '.jpg');
+END$$
+
+DELIMITER ;
+
 -- tự động định dạng lại member_id
 DELIMITER $$
 
@@ -256,8 +268,6 @@ FOR EACH ROW
 BEGIN
     DECLARE temp_book_name VARCHAR(45);
     DECLARE temp_price DOUBLE;
-    -- Cập nhật order_date với thời gian hiện tại
-    SET NEW.order_date = NOW();
 
     -- Lấy tên sách và giá sách từ bảng books
     SELECT book_name, price INTO temp_book_name, temp_price
@@ -313,6 +323,7 @@ BEGIN
     DECLARE member_id VARCHAR(10);
     DECLARE book_id VARCHAR(10);
     DECLARE quantity INT;
+    DECLARE order_date DATETIME;
 
     WHILE i < 100 DO
         -- Sinh mã member_id ngẫu nhiên
@@ -321,19 +332,27 @@ BEGIN
         -- Sinh mã book_id ngẫu nhiên
         SET book_id = CONCAT('B0', LPAD(FLOOR(1 + RAND() * 20), 2, '0'));
 
-        -- Sinh so luong ngau nhien
+        -- Sinh số lượng ngẫu nhiên
         SET quantity = 1 + RAND() * 3;
 
-        -- Chèn bản ghi vào bảng borrow
-        INSERT INTO payment (member_id, book_id, quantity_of_order)
-        VALUES (member_id, book_id,quantity);
+        -- Sinh ngày giờ mua ngẫu nhiên
+        SET order_date = CONCAT(
+            '2024-11-',
+            LPAD(FLOOR(1 + RAND() * 30), 2, '0'), ' ',
+            LPAD(FLOOR(RAND() * 24), 2, '0'), ':',
+            LPAD(FLOOR(RAND() * 60), 2, '0'), ':',
+            LPAD(FLOOR(RAND() * 60), 2, '0')
+        );
+
+        -- Chèn bản ghi vào bảng payment
+        INSERT INTO payment (member_id, book_id, quantity_of_order, order_date)
+        VALUES (member_id, book_id, quantity, order_date);
 
         SET i = i + 1;
     END WHILE;
 END$$
 
 DELIMITER ;
-
 
 -- Dữ liệu mẫu
 INSERT INTO members (firstName, lastName, gender, birth, email, phone)
@@ -361,26 +380,27 @@ VALUES
 
 INSERT INTO books (book_name, book_author, price, quantity_in_store)
 VALUES
-('To Kill a Mockingbird', 'Harper Lee', 150.0, 50),
-('1984', 'George Orwell', 120.0, 40),
-('Pride and Prejudice', 'Jane Austen', 100.0,  30),
-('The Great Gatsby', 'F. Scott Fitzgerald', 130.0, 60),
-('Moby Dick', 'Herman Melville', 170.0, 25),
-( 'War and Peace', 'Leo Tolstoy', 200.0, 20),
-('The Odyssey', 'Homer', 180.0,  35),
-( 'The Catcher in the Rye', 'J.D. Salinger', 140.0,  25),
-( 'Animal Farm', 'George Orwell', 110.0,  50),
-('The Lord of the Rings', 'J.R.R. Tolkien', 300.0, 20),
+('To Kill a Mockingbird', 'Harper Lee', 150.0, 100),
+('1984', 'George Orwell', 120.0, 100),
+('Pride and Prejudice', 'Jane Austen', 100.0,  100),
+('The Great Gatsby', 'F. Scott Fitzgerald', 130.0, 100),
+('Moby Dick', 'Herman Melville', 170.0, 100),
+('War and Peace', 'Leo Tolstoy', 200.0, 100),
+('The Odyssey', 'Homer', 180.0,  100),
+('The Catcher in the Rye', 'J.D. Salinger', 140.0,  100),
+('Animal Farm', 'George Orwell', 110.0,  100),
+('The Lord of the Rings', 'J.R.R. Tolkien', 300.0, 100),
 ('Harry Potter and the Philosopher\'s Stone', 'J.K. Rowling', 250.0,  100),
-( 'The Alchemist', 'Paulo Coelho', 190.0,  70),
-( 'Don Quixote', 'Miguel de Cervantes', 220.0,  15),
-( 'Jane Eyre', 'Charlotte Brontë', 150.0, 40),
-( 'The Book Thief', 'Markus Zusak', 170.0,  60),
-('The Hobbit', 'J.R.R. Tolkien', 190.0,  30),
-('Fahrenheit 451', 'Ray Bradbury', 120.0,  25),
-( 'Brave New World', 'Aldous Huxley', 150.0,  35),
-('The Kite Runner', 'Khaled Hosseini', 180.0,  50),
-('The Hunger Games', 'Suzanne Collins', 200.0,  70);
+('The Alchemist', 'Paulo Coelho', 190.0,  100),
+('Don Quixote', 'Miguel de Cervantes', 220.0,  100),
+('Jane Eyre', 'Charlotte Brontë', 150.0, 100),
+('The Book Thief', 'Markus Zusak', 170.0,  100),
+('The Hobbit', 'J.R.R. Tolkien', 190.0,  100),
+('Fahrenheit 451', 'Ray Bradbury', 120.0,  100),
+('Brave New World', 'Aldous Huxley', 150.0,  100),
+('The Kite Runner', 'Khaled Hosseini', 180.0,  100),
+('The Hunger Games', 'Suzanne Collins', 200.0,  100);
+
 
 call insert_random_borrows();
 

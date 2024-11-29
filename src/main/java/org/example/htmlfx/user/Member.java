@@ -9,7 +9,6 @@ import java.util.List;
 public class Member extends Users {
 
     private int totalBooksCheckedOut = 0;
-    private List<BookItem> listBorrowed = new ArrayList<>();
 
     public Member() {
         super();
@@ -33,14 +32,5 @@ public class Member extends Users {
 
     public void addBorrowed() {
 
-    }
-
-    public List<BookItem> showListBorrowed() {
-
-        return listBorrowed;
-    }
-
-    public List<BookItem> booksBorrowed() {
-        return listBorrowed;
     }
 }

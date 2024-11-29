@@ -10,13 +10,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.toolkits.MenuEvent;
 import org.example.htmlfx.toolkits.SearchBar;
 import org.example.htmlfx.SwitchScene;
-import org.example.htmlfx.borrow.Temp;
+import org.example.htmlfx.borrow.Borrow;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,22 +49,22 @@ public class Member_controller implements Initializable {
     private TableColumn<Member, String> GenderColumn;
 
     @FXML
-    private TableView<Temp> tableInfo;
+    private TableView<Borrow> tableInfo;
 
     @FXML
-    private TableColumn<Temp, String> BorrowedIDColumn;
+    private TableColumn<Borrow, String> BorrowedIDColumn;
 
     @FXML
-    private TableColumn<Temp, String> BooknameColumn;
+    private TableColumn<Borrow, String> BooknameColumn;
 
     @FXML
-    private TableColumn<Temp, String> BorrowedColumn;
+    private TableColumn<Borrow, String> BorrowedColumn;
 
     @FXML
-    private TableColumn<Temp, String> ReturnedColumn;
+    private TableColumn<Borrow, String> ReturnedColumn;
 
     @FXML
-    private TableColumn<Temp, String> StatusColumn;
+    private TableColumn<Borrow, String> StatusColumn;
 
     @FXML
     private ListView<String> listView;
@@ -165,7 +167,7 @@ public class Member_controller implements Initializable {
                 Member selected = tableView.getSelectionModel().getSelectedItem();
                 if (selected != null) { // Thêm kiểm tra
                     selectedMember = selected;
-                    ObservableList<Temp> temps = FXCollections.observableArrayList(Member_controller.getTemp(selected.getId()));
+                    ObservableList<Borrow> temps = FXCollections.observableArrayList(Member_controller.getTemp(selected.getId()));
                     tableInfo.setItems(temps);
                     handleDoubleClick(selected);
                 }
@@ -234,8 +236,8 @@ public class Member_controller implements Initializable {
         return members;
     }
 
-    public static List<Temp> getTemp(String id) {
-        List<Temp> temps = new ArrayList<>();
+    public static List<Borrow> getTemp(String id) {
+        List<Borrow> temps = new ArrayList<>();
         String sql = "SELECT * FROM borrow WHERE member_id = ? ORDER BY borrow_date DESC";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -248,7 +250,7 @@ public class Member_controller implements Initializable {
                 String returnDate = resultSet.getString("returned_date");
                 String status = resultSet.getString("status");
 
-                temps.add(new Temp(ID, name, borrowDate, returnDate, status));
+                temps.add(new Borrow(ID, name, borrowDate, returnDate, status));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -302,7 +304,7 @@ public class Member_controller implements Initializable {
                 selectedMember = member;
                 currentMember = selectedMember;
                 handleDoubleClick(member);
-                ObservableList<Temp> temps = FXCollections.observableArrayList(Member_controller.getTemp(searchID.getText()));
+                ObservableList<Borrow> temps = FXCollections.observableArrayList(Member_controller.getTemp(searchID.getText()));
                 tableInfo.setItems(temps);
             }
 
@@ -326,6 +328,36 @@ public class Member_controller implements Initializable {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
         }
+    }
+
+    @FXML
+    private void gotoHome(MouseEvent event) {
+        MenuEvent.gotoHome(event);
+    }
+
+    @FXML
+    private void gotoBook(MouseEvent event) {
+        MenuEvent.gotoBook(event);
+    }
+
+    @FXML
+    private void gotoMember(MouseEvent event) {
+        MenuEvent.gotoMember(event);
+    }
+
+    @FXML
+    private void gotoBorrow(MouseEvent event) {
+        MenuEvent.gotoBorrow(event);
+    }
+
+    @FXML
+    private void gotoIncome(MouseEvent event) {
+        MenuEvent.gotoIncome(event);
+    }
+
+    @FXML
+    private void gotoLogin(MouseEvent event) {
+        MenuEvent.gotoLogin(event);
     }
 
 }

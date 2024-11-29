@@ -6,16 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import org.example.htmlfx.borrow.Temp;
 import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.toolkits.MenuEvent;
 import org.example.htmlfx.toolkits.SearchBar;
-import org.example.htmlfx.user.Member;
-import org.example.htmlfx.user.Member_controller;
 
 import java.net.URL;
 import java.sql.*;
@@ -220,7 +218,8 @@ public class Income_Control implements Initializable {
     private void setupBook(ResultSet rs) throws SQLException {
         String name = rs.getString("book_name");
         String price = rs.getString("price");
-        String res = "Name: " + name + "\nPrice: " + price + "00 VND";
+        String remain = rs.getString("remaining_quantity");
+        String res = "Name: " + name + "\nPrice: " + price + "00 VND" + "\n" + "Remaining: " + remain;
         bookname.setText(res);
 
         value = rs.getDouble("price");
@@ -310,8 +309,6 @@ public class Income_Control implements Initializable {
     public void addPayment() {
         pane1.setVisible(false);
         pane2.setVisible(true);
-
-
     }
 
     @FXML
@@ -330,7 +327,7 @@ public class Income_Control implements Initializable {
             return; // Dừng lại nếu thiếu thông tin
         }
 
-        String sql = "INSERT INTO payment (member_id, book_id, quantity_of_order) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO payment (member_id, book_id, quantity_of_order, order_date) VALUES (?, ?, ?, current_timestamp)";
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, member_field.getText());
@@ -369,5 +366,35 @@ public class Income_Control implements Initializable {
         member_field.setText("");
         book_field.setText("");
         quantity_field.setText("");
+    }
+
+    @FXML
+    private void gotoHome(MouseEvent event) {
+        MenuEvent.gotoHome(event);
+    }
+
+    @FXML
+    private void gotoBook(MouseEvent event) {
+        MenuEvent.gotoBook(event);
+    }
+
+    @FXML
+    private void gotoMember(MouseEvent event) {
+        MenuEvent.gotoMember(event);
+    }
+
+    @FXML
+    private void gotoBorrow(MouseEvent event) {
+        MenuEvent.gotoBorrow(event);
+    }
+
+    @FXML
+    private void gotoIncome(MouseEvent event) {
+        MenuEvent.gotoIncome(event);
+    }
+
+    @FXML
+    private void gotoLogin(MouseEvent event) {
+        MenuEvent.gotoLogin(event);
     }
 }

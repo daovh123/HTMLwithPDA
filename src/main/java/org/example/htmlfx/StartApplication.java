@@ -12,17 +12,12 @@ public class StartApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Parent root = FXMLLoader.load(getClass().getResource("user/Members.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("book/Book.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("borrow/Borrow.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("income/Income.fxml"));
-        //Parent root = FXMLLoader.load(getClass().getResource("Start.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("dashboard/Dashboard.fxml"));
-        Scene scene = new Scene(root);  // Đặt kích thước cửa sổ
+        Parent root = FXMLLoader.load(getClass().getResource("/org/example/htmlfx/Start.fxml"));
+        Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
-
 
     public static void main(String[] args) {
 

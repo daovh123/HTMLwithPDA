@@ -15,17 +15,16 @@
       <StackPane fx:id="stackPaneLeft" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: none;">
          <VBox id="signInVbox" fx:id="signInVbox" alignment="CENTER" prefHeight="646.0" prefWidth="400.0" spacing="20" style="-fx-padding: 40;">
             <Label style="-fx-text-fill: #4252B4; -fx-font-size: 24px; -fx-font-weight: bold;" text="Sign In" />
-            <TextField promptText="Email" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
-            <PasswordField promptText="Password" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
-            <Label style="-fx-text-fill: #4252B4;" text="Forgot your password?" />
+            <TextField fx:id="email_signin" promptText="Email" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
+            <PasswordField fx:id="password_signin" promptText="Password" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
             <Button onAction="#handleSignIn" style="-fx-background-color: #4252B4; -fx-background-radius: 20; -fx-text-fill: white; -fx-padding: 10 40;" text="SIGN IN" />
          </VBox>
          <VBox fx:id="createVbox" alignment="CENTER" prefHeight="646.0" prefWidth="400.0" spacing="20" style="-fx-padding: 40;" visible="false">
             <children>
                <Label style="-fx-text-fill: #4252B4; -fx-font-size: 24px; -fx-font-weight: bold;" text="Create Account" />
-               <TextField promptText="Name" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
-               <TextField promptText="Email" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
-               <PasswordField promptText="Password" style="-fx-background-color:#E8F0FE ; -fx-background-radius: 10; -fx-padding: 10;" />
+               <TextField fx:id="name" promptText="Name" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
+               <TextField fx:id="email" promptText="Email" style="-fx-background-color: #E8F0FE; -fx-background-radius: 10; -fx-padding: 10;" />
+               <PasswordField fx:id="password" promptText="Password" style="-fx-background-color:#E8F0FE ; -fx-background-radius: 10; -fx-padding: 10;" />
                <Button onAction="#handleSignUp" style="-fx-background-color: #4252B4; -fx-background-radius: 20; -fx-text-fill: white; -fx-padding: 10 40;" text="SIGN UP" />
             </children>
          </VBox>
@@ -42,7 +41,7 @@
             <children>
                <Label style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold;" text="Welcome Back!" />
                <Label style="-fx-text-fill: white; -fx-font-size: 14px;" text="Login with your personal info" textAlignment="CENTER" wrapText="true" />
-               <Button onAction="#handleSignUp" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 10 20;" text="SIGN IN" />
+               <Button onAction="#handleSignIn" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 20; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 10 20;" text="SIGN IN" />
             </children>
          </VBox>
       </StackPane>

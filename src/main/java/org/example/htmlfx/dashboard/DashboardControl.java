@@ -9,10 +9,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.htmlfx.SceneController;
+import org.example.htmlfx.SwitchScene;
+import org.example.htmlfx.borrow.Borrow_controller;
 import org.example.htmlfx.toolkits.DatabaseConnection;
 import javafx.scene.control.ListView;
 import javafx.geometry.Insets;
@@ -21,8 +25,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
+import org.example.htmlfx.toolkits.MenuEvent;
 import org.example.htmlfx.toolkits.Music;
+import org.example.htmlfx.user.Member;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +56,8 @@ public class DashboardControl {
     private ImageView settingButton;
     @FXML
     private Label getBorrow;
+    @FXML
+    private ImageView image;
 
     private Music music = new Music();
 
@@ -69,6 +78,10 @@ public class DashboardControl {
         notificationService.start();
         notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
         notificationListView.setVisible(false);
+
+        String path = getClass().getResource(SceneController.getAdmin().getImage()).toExternalForm();
+        Image temp = new Image(path);
+        image.setImage(temp);
     }
 
     @FXML
@@ -85,6 +98,11 @@ public class DashboardControl {
         }
     }
 
+    @FXML
+    private void info_admin(MouseEvent event) throws IOException {
+        SwitchScene sw = new SwitchScene();
+        sw.openNewScene(event, "user/Admin_Edit.fxml", this);
+    }
 
     public static List<MostBorrowed> getBorrowed() {
         List<MostBorrowed> mostBorrowed = new ArrayList<>();
@@ -229,6 +247,42 @@ public class DashboardControl {
         stage.setTitle("Music Control Settings");
         stage.setOnCloseRequest(e -> music.dispose());
         stage.show();
+    }
+
+    @FXML
+    private void gotoHome(MouseEvent event) {
+        MenuEvent.gotoHome(event);
+    }
+
+    @FXML
+    private void gotoBook(MouseEvent event) {
+        MenuEvent.gotoBook(event);
+    }
+
+    @FXML
+    private void gotoMember(MouseEvent event) {
+        MenuEvent.gotoMember(event);
+    }
+
+    @FXML
+    private void gotoBorrow(MouseEvent event) {
+        MenuEvent.gotoBorrow(event);
+    }
+
+    @FXML
+    private void gotoIncome(MouseEvent event) {
+        MenuEvent.gotoIncome(event);
+    }
+
+    @FXML
+    private void gotoLogin(MouseEvent event) {
+        MenuEvent.gotoLogin(event);
+    }
+
+    @FXML
+    private void gotoBorrow_temp(MouseEvent event) {
+        Borrow_controller.check = false;
+        MenuEvent.gotoBorrow(event);
     }
 
 }

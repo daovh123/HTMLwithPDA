@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.htmlfx.dashboard.DashboardControl;
 import org.example.htmlfx.toolkits.DatabaseConnection;
 import org.example.htmlfx.toolkits.ParentControllerAware;
 
@@ -15,6 +16,11 @@ import java.sql.SQLException;
 
 public class Member_Delete implements ParentControllerAware {
     private Member_controller parentController;
+
+    @Override
+    public void setParentController(DashboardControl parentController) {
+
+    }
 
     @Override
     public void setParentController(Member_controller parentController) {

@@ -21,6 +21,10 @@ public class Book {
     private int amount;
     private double price;
 
+    public Book() {
+
+    }
+
     public double getPrice() {
         return price;
     }

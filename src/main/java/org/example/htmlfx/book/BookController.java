@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.htmlfx.toolkits.DatabaseConnection;
+import org.example.htmlfx.toolkits.MenuEvent;
 import org.example.htmlfx.toolkits.SearchBar;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ import com.google.zxing.common.BitMatrix;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 
+import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -50,6 +52,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 import static org.example.htmlfx.toolkits.Alert.showAlert;
 
 public class BookController implements Initializable {
@@ -102,6 +105,8 @@ public class BookController implements Initializable {
 
     private MyClicked myClicked;
     SearchBar searchBar = new SearchBar();
+
+
     private StringProperty querry = new SimpleStringProperty("OOP");
     public Book recentlybook;
 
@@ -136,7 +141,7 @@ public class BookController implements Initializable {
                 updateBooks(query);
             }
         });
-        bookCase = fetchBooksFromAPI(String.valueOf(querry), 15);
+        bookCase = fetchBooksFromAPI(String.valueOf(querry), 10);
         setDataShowBook(bookCase.get(0));
         myClicked = new MyClicked() {
             @Override
@@ -187,7 +192,7 @@ public class BookController implements Initializable {
                 updateBooks(query);
             }
         });
-        bookCase = fetchBooksFromAPI(querry, 15);
+        bookCase = fetchBooksFromAPI(querry, 10);
         setDataShowBook(bookCase.get(0));
         caseBook.getChildren().clear();
 
@@ -259,7 +264,8 @@ public class BookController implements Initializable {
 
     private static final String GOOGLE_BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
-    private List<Book> fetchBooksFromAPI(String keyword, int maxResults) {
+    public List<Book> fetchBooksFromAPI(String keyword, int maxResults) {
+
         List<Book> books = new ArrayList<>();
         try {
             // Tạo URL truy vấn
@@ -350,9 +356,9 @@ public class BookController implements Initializable {
             e.printStackTrace();
         }
 
+
         return books;
     }
-
 
     private void supershowAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -496,8 +502,34 @@ public class BookController implements Initializable {
         }
     }
 
+    @FXML
+    private void gotoHome(MouseEvent event) {
+        MenuEvent.gotoHome(event);
+    }
+
+    @FXML
+    private void gotoBook(MouseEvent event) {
+        MenuEvent.gotoBook(event);
+    }
+
+    @FXML
+    private void gotoMember(MouseEvent event) {
+        MenuEvent.gotoMember(event);
+    }
+
+    @FXML
+    private void gotoBorrow(MouseEvent event) {
+        MenuEvent.gotoBorrow(event);
+    }
+
+    @FXML
+    private void gotoIncome(MouseEvent event) {
+        MenuEvent.gotoIncome(event);
+    }
+
+    @FXML
+    private void gotoLogin(MouseEvent event) {
+        MenuEvent.gotoLogin(event);
+    }
 
 }
-
-
-
