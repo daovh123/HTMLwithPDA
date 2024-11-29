@@ -81,7 +81,7 @@ public class DashboardControl {
         setLineChart();
         setIncome();
         setBorrow();
-        //music.play();
+        music.play();
         notificationService.start();
         notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
         notificationListView.setVisible(false);
