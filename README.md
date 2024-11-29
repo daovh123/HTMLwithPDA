@@ -1,5 +1,5 @@
 # Library Management System HTML
-
+![Mô tả hình ảnh](/src/main/resources/img/application/HTML.png)
 ## Members of HTML:
 - **Nguyễn Thị Phương 23021668**
 - **Lê Huy Anh 23021464**
@@ -44,16 +44,17 @@ An interactive library management application built using Java, JavaFX, CSS and 
 
 ![Mô tả hình ảnh](./imageforreadme/Signup.png)
 **DASHBOARD**: OVERVIEW OUR APPLICATION: 
-- MOST BORROWING BOOK
-- INCOME
-- BORROWTIMES
+- MOST BORROWING BOOK, INCOME, BORROWTIMES
+- ![Mô tả hình ảnh](./imageforreadme/Dashboard.png)
 - MUSIC SETTING
+ ![Mô tả hình ảnh](./imageforreadme/MusicSetting.png)
 - NOTIFICATION.
-![Mô tả hình ảnh](./imageforreadme/Dashboard.png)
 ![Mô tả hình ảnh](./imageforreadme/Notification.png)
-![Mô tả hình ảnh](./imageforreadme/MusicSetting.png)
-
+- EDIT INFORMATION ADMIN, CHANGE AVATAR
+![Mô tả hình ảnh](./imageforreadme/Edit_Admin.png)
 **BOOK**: SEARCH BAR, ADD NEW BOOK INTO LIBRARY AND SEE PREVIEW BOOK IN OUR LIBRARY.
+- List books:
+![Mô tả hình ảnh](./imageforreadme/Book.png)
 - Search books:
 ![Mô tả hình ảnh](./imageforreadme/Search_book.png)
 - View preview book, add book into library, get QR's book.
