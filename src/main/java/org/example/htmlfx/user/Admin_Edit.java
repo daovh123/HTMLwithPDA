@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.htmlfx.SceneController;
 import org.example.htmlfx.dashboard.DashboardControl;
@@ -53,6 +54,11 @@ public class Admin_Edit implements ParentControllerAware {
     @FXML
     private TextField info_phone;
 
+    @FXML
+    private Text image;
+
+    private String s;
+
     private Admin edittingAdmin;
 
     public void initialize() {
@@ -99,7 +105,7 @@ public class Admin_Edit implements ParentControllerAware {
         }
 
         String updateAdminSQL = "UPDATE Admins " +
-                "SET firstname = ?, lastname = ?, gender = ?, birth = ?, phone = ? , password = ?" +
+                "SET firstname = ?, lastname = ?, gender = ?, birth = ?, phone = ? , password = ?, image = ?" +
                 "WHERE email = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -112,6 +118,7 @@ public class Admin_Edit implements ParentControllerAware {
             String newBirthday = info_birthday.getText();
             String newPhone = info_phone.getText();
             String newPassword = info_password.getText();
+            String newImage = s;
 
             updateAdminStatement.setString(1, newFirstname);
             updateAdminStatement.setString(2, newLastname);
@@ -119,10 +126,22 @@ public class Admin_Edit implements ParentControllerAware {
             updateAdminStatement.setString(4, newBirthday);
             updateAdminStatement.setString(5, newPhone);
             updateAdminStatement.setString(6, newPassword);
-            updateAdminStatement.setString(7, email);
+            updateAdminStatement.setString(7, newImage);
+            updateAdminStatement.setString(8, email);
 
             int rowsAffected = updateAdminStatement.executeUpdate();
             if (rowsAffected > 0) {
+                edittingAdmin.setFirstname(newFirstname);
+                edittingAdmin.setLastname(newLastname);
+                edittingAdmin.setGender(newGender);
+                edittingAdmin.setBirthday(newBirthday);
+                edittingAdmin.setPhone(newPhone);
+                edittingAdmin.setPassword(newPassword);
+                edittingAdmin.setEmail(email);
+                edittingAdmin.setImage(newImage);
+
+                parentController.update(edittingAdmin);
+
 
                 showAlert(Alert.AlertType.INFORMATION, "Success", "User updated successfully.");
 
@@ -153,4 +172,29 @@ public class Admin_Edit implements ParentControllerAware {
     public void setParentController(Member_controller parentController) {
 
     }
+
+    @FXML
+    public void pick1() {
+        image.setText("Change avt No.1");
+        s="/img/avt/admin/image1.jpg";
+    }
+
+    @FXML
+    public void pick2() {
+        image.setText("Change avt No.2");
+        s="/img/avt/admin/image2.jpg";
+    }
+
+    @FXML
+    public void pick3() {
+        image.setText("Change avt No.3");
+        s="/img/avt/admin/image3.jpg";
+    }
+
+    @FXML
+    public void pick4() {
+        image.setText("Change avt No.4");
+        s="/img/avt/admin/image4.jpg";
+    }
+
 }

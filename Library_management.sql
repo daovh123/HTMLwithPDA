@@ -95,7 +95,7 @@ CREATE TRIGGER before_insert_admin
 BEFORE INSERT ON admins
 FOR EACH ROW
 BEGIN
-    SET NEW.image = CONCAT('/img/avt/admin/image', FLOOR(1 + RAND() * 3), '.jpg');
+    SET NEW.image = CONCAT('/img/avt/admin/image', FLOOR(1 + RAND() * 4), '.jpg');
 END$$
 
 DELIMITER ;
@@ -405,5 +405,3 @@ VALUES
 call insert_random_borrows();
 
 call insert_random_payment();
-
-SELECT * FROM admins WHERE (email = 'fanny' or admin_name = 'fanny') and password = '123456';

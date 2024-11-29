@@ -31,6 +31,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import org.example.htmlfx.toolkits.MenuEvent;
 import org.example.htmlfx.toolkits.Music;
+import org.example.htmlfx.user.Admin;
 import org.example.htmlfx.user.Member;
 
 import java.io.IOException;
@@ -86,6 +87,13 @@ public class DashboardControl {
         notificationListView.setVisible(false);
         if(notificationService.getNotifications().isEmpty()) {bellRing();}
 
+        String path = getClass().getResource(SceneController.getAdmin().getImage()).toExternalForm();
+        Image temp = new Image(path);
+        image.setImage(temp);
+    }
+
+    public void update(Admin admin) {
+        SceneController.setAdmin(admin);
         String path = getClass().getResource(SceneController.getAdmin().getImage()).toExternalForm();
         Image temp = new Image(path);
         image.setImage(temp);

@@ -76,6 +76,10 @@ public class SceneController {
         return admin;
     }
 
+    public static void setAdmin(Admin admin) {
+        SceneController.admin = admin;
+    }
+
     public void handleSwitchScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/org/example/htmlfx/dashboard/Dashboard.fxml"));
