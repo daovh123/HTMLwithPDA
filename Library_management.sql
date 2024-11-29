@@ -405,3 +405,5 @@ VALUES
 call insert_random_borrows();
 
 call insert_random_payment();
+
+SELECT * FROM admins WHERE (email = 'fanny' or admin_name = 'fanny') and password = '123456';

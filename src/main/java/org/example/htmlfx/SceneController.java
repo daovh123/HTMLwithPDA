@@ -76,8 +76,6 @@ public class SceneController {
         return admin;
     }
 
-
-
     public void handleSwitchScene(ActionEvent event) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("/org/example/htmlfx/dashboard/Dashboard.fxml"));
@@ -143,55 +141,39 @@ public class SceneController {
                 return;
             }
 
-            if (!isValidEmail(email_signin.getText())) {
-                showAlert(Alert.AlertType.INFORMATION, "Info", "Invalid email address. \n.............@gmail.com");
-                clearData();
-                return;
-            }
-
-            String emailQuery = "SELECT * FROM admins WHERE email = ?";
-            String passwordQuery = "SELECT * FROM admins WHERE email = ? and password = ?";
+            String credential = email_signin.getText();
+            String passwordQuery = "SELECT * FROM admins WHERE (email = ? OR admin_name = ?) AND password = ?";
 
             try (Connection connection = DatabaseConnection.getConnection();
-                 PreparedStatement emailStatement = connection.prepareStatement(emailQuery);
                  PreparedStatement passwordStatement = connection.prepareStatement(passwordQuery)) {
 
-                // Kiểm tra email
-                emailStatement.setString(1, email_signin.getText());
-                ResultSet emailResultSet = emailStatement.executeQuery();
+                // Kiểm tra mật khẩu
+                passwordStatement.setString(1, credential);
+                passwordStatement.setString(2, credential);
+                passwordStatement.setString(3, password_signin.getText());
+                ResultSet passwordResultSet = passwordStatement.executeQuery();
 
-                if (emailResultSet.next()) {
-                    // Email tồn tại, kiểm tra mật khẩu
-                    passwordStatement.setString(1, email_signin.getText());
-                    passwordStatement.setString(2, password_signin.getText());
-                    ResultSet passwordResultSet = passwordStatement.executeQuery();
+                if (passwordResultSet.next()) {
+                    // Mật khẩu chính xác, đăng nhập thành công
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Login success");
 
-                    if (passwordResultSet.next()) {
-                        // Mật khẩu chính xác, đăng nhập thành công
-                        showAlert(Alert.AlertType.INFORMATION, "Success", "Login success");
+                    String id = passwordResultSet.getString("admin_id");
+                    String firstName = passwordResultSet.getString("firstName");
+                    String lastName = passwordResultSet.getString("lastName");
+                    String email = passwordResultSet.getString("email");
+                    String password = passwordResultSet.getString("password");
+                    String name = passwordResultSet.getString("admin_name");
+                    String gender = passwordResultSet.getString("gender");
+                    String phone = passwordResultSet.getString("phone");
+                    String image = passwordResultSet.getString("image");
+                    String birth = passwordResultSet.getString("birth");
 
-                        String id = passwordResultSet.getString("admin_id");
-                        String firstName = passwordResultSet.getString("firstName");
-                        String lastName = passwordResultSet.getString("lastName");
-                        String email = passwordResultSet.getString("email");
-                        String password = passwordResultSet.getString("password");
-                        String name = passwordResultSet.getString("admin_name");
-                        String gender = passwordResultSet.getString("gender");
-                        String phone = passwordResultSet.getString("phone");
-                        String image = passwordResultSet.getString("image");
-                        String birth = passwordResultSet.getString("birth");
+                    admin = new Admin(id, firstName, lastName, gender, birth, email, phone, password, name, image);
 
-                        admin = new Admin(id, firstName, lastName, gender, birth, email, phone, password, name, image);
-
-                        handleSwitchScene(event);
-                    } else {
-                        // Mật khẩu không chính xác
-                        showAlert(Alert.AlertType.ERROR, "Error", "Invalid password");
-                        password_signin.setText("");
-                    }
+                    handleSwitchScene(event);
                 } else {
-                    // Email không tồn tại
-                    showAlert(Alert.AlertType.WARNING, "Warning", "Account does not exist. \nPlease register first.");
+                    // Mật khẩu không chính xác hoặc tài khoản không tồn tại
+                    showAlert(Alert.AlertType.ERROR, "Error", "Invalid credentials or account does not exist.");
                     clearData();
                 }
 

@@ -1,5 +1,8 @@
 package org.example.htmlfx.dashboard;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.htmlfx.SceneController;
 import org.example.htmlfx.SwitchScene;
 import org.example.htmlfx.borrow.Borrow_controller;
@@ -58,6 +62,8 @@ public class DashboardControl {
     private Label getBorrow;
     @FXML
     private ImageView image;
+    @FXML
+    private ImageView bell;
 
     private Music music = new Music();
 
@@ -78,6 +84,7 @@ public class DashboardControl {
         notificationService.start();
         notificationListView.setItems(FXCollections.observableArrayList(notificationService.getNotifications()));
         notificationListView.setVisible(false);
+        if(notificationService.getNotifications().isEmpty()) {bellRing();}
 
         String path = getClass().getResource(SceneController.getAdmin().getImage()).toExternalForm();
         Image temp = new Image(path);
@@ -202,13 +209,13 @@ public class DashboardControl {
             } else {
                 music.play();
                 togglePlayButton.setText("⏸ Pause");
-                togglePlayButton.setStyle("-fx-font-size: 16px; -fx-background-color: #f44336; -fx-text-fill: white;");
+                togglePlayButton.setStyle("-fx-font-size: 16px; -fx-background-color: #44a5ff; -fx-text-fill: white;");
             }
         });
 
         // Nút Tắt tiếng
         Button muteButton = new Button("🔇 Mute");
-        muteButton.setStyle("-fx-font-size: 16px; -fx-background-color: #ff9800; -fx-text-fill: white; -fx-padding: 10px;");
+        muteButton.setStyle("-fx-font-size: 16px; -fx-background-color: #44a5ff; -fx-text-fill: white; -fx-padding: 10px;");
         muteButton.setOnAction(e -> {
             if (music.getVolume() > 0) {
                 music.setVolume(0);
@@ -285,4 +292,30 @@ public class DashboardControl {
         MenuEvent.gotoBorrow(event);
     }
 
+    private void shakeBell() {
+        // Tạo hiệu ứng lắc
+        RotateTransition shake = new RotateTransition(Duration.millis(100), bell);
+        shake.setFromAngle(-10); // Góc bắt đầu lắc
+        shake.setToAngle(10);    // Góc kết thúc lắc
+        shake.setCycleCount(10);  // 3 lần lắc (6 chu kỳ)
+        shake.setAutoReverse(true); // Tự động đảo ngược góc lắc
+        shake.play();
+
+    }
+    private void stopShake() {
+        // Dừng hiệu ứng lắc và chờ 1 giây
+        bell.setRotate(0); // Khôi phục góc về 0
+    }
+    public void bellRing() {
+        // Tạo Timeline cho lắc chuông
+        Timeline timeline = new Timeline(
+                // Lắc qua lại trong 3 giây
+                new KeyFrame(Duration.millis(0), e -> shakeBell()),  // Bắt đầu lắc ngay lập tức
+                new KeyFrame(Duration.millis(1500), e -> stopShake()) // Dừng lắc sau 3 giây
+        );
+
+        // Sau 3 giây, nghỉ 1 giây và tiếp tục lắc
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
+    }
 }

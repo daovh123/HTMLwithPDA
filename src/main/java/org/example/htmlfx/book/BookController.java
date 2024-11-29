@@ -1,6 +1,7 @@
 package org.example.htmlfx.book;
 
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
@@ -32,7 +33,6 @@ import com.google.zxing.common.BitMatrix;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 
-import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -52,13 +52,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CompletableFuture;
+
 import static org.example.htmlfx.toolkits.Alert.showAlert;
 
 public class BookController implements Initializable {
     public String link = "https://www.facebook.com/kieuvantuyen01";
     public int amount = 0;
     List<Book> bookCase = new ArrayList<>();
+    private final BookCache bookCache = new BookCache();
     @FXML
     private GridPane caseBook;
 
@@ -80,8 +82,6 @@ public class BookController implements Initializable {
     @FXML
     private Button returnButton;
 
-    @FXML
-    private HBox root;
 
     @FXML
     private ScrollPane scrollBook;
@@ -93,8 +93,6 @@ public class BookController implements Initializable {
     private Button showQR;
 
     @FXML
-    private AnchorPane toolbar_pane;
-    @FXML
     TextField textField;
     @FXML
     ListView<String> viewList;
@@ -102,12 +100,12 @@ public class BookController implements Initializable {
     Label stocklabel;
     @FXML
     TextField amountBook;
+    @FXML
+    Label statusLabel;
 
     private MyClicked myClicked;
     SearchBar searchBar = new SearchBar();
-
-
-    private StringProperty querry = new SimpleStringProperty("OOP");
+    private StringProperty querry = new SimpleStringProperty();
     public Book recentlybook;
 
     public StringProperty querryProperty() {
@@ -128,21 +126,24 @@ public class BookController implements Initializable {
         int column = 0;
         int row = 1;
         bookCase = new ArrayList<>();
-        // Lắng nghe sự thay đổi của querry
+
+        // Lắng nghe sự thay đổi của query
         querryProperty().addListener((observable, oldValue, newValue) -> {
-            updateBooks(newValue); // Gọi phương thức cập nhật lại dữ liệu sách
-        });
-        textField.setOnAction(event -> {
-            // Lấy giá trị từ textField
-            String query = textField.getText().trim();
-            textField.setText("");
-            // Gọi phương thức cập nhật sách với query vừa nhập
-            if (!query.isEmpty()) {
-                updateBooks(query);
+            if (newValue != null && !newValue.trim().isEmpty()) {
+                updateBooksCF(newValue.trim()); // Gọi phương thức cập nhật lại dữ liệu sách
             }
         });
-        bookCase = fetchBooksFromAPI(String.valueOf(querry), 10);
-        setDataShowBook(bookCase.get(0));
+
+        // Xử lý khi nhấn Enter trên textField
+        textField.setOnAction(event -> {
+            String query = textField.getText().trim();
+            textField.setText("");
+            if (!query.isEmpty()) {
+                updateBooksCF(query);
+            }
+        });
+
+        // Tạo callback khi nhấn vào sách
         myClicked = new MyClicked() {
             @Override
             public void myClicked(Book book) throws IOException, WriterException {
@@ -156,54 +157,72 @@ public class BookController implements Initializable {
                 quantity_in_Stock_Book(recentlybook.getbookmark());
             }
         };
-        try {
-            for (Book book : bookCase) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("BookCase.fxml"));
-                VBox bookCaseBox = fxmlLoader.load();
-                BookCaseController bookCaseController = fxmlLoader.getController();
-                bookCaseController.setData(book, myClicked);
-                bookCaseBox.setUserData(book);
-                if (column == 5) {
-                    column = 0;
-                    ++row;
-                }
-                caseBook.add(bookCaseBox, column++, row);
-                GridPane.setMargin(bookCaseBox, new Insets(10));
-            }
-        } catch (IOException e) {
-            System.out.println("Error loading FXML for bookcase: " + e.getMessage());
-            e.printStackTrace();
-        }
-        searchBar.setupSearchField(textField, viewList);
 
+        // Tải dữ liệu mặc định (nếu cần)
+        updateBooksCF("Naruto"); // Từ khóa mặc định
+
+        // Cài đặt thanh tìm kiếm
+        searchBar.setupSearchField(textField, viewList);
+    }
+    private void updateBooksCF(String query) {
+        // Kiểm tra cache trước
+        if (bookCache.contains(query)) {
+            List<Book> cachedBooks = bookCache.get(query);
+            loadBooksToUI(cachedBooks);
+            statusLabel.setText("Dữ liệu được tải từ cache.");
+            return;
+        }
+
+        // Hiển thị thông báo đang tải
+        statusLabel.setText("Đang tải dữ liệu...");
+
+        // Gọi API bất đồng bộ
+        fetchBooksFromAPIAsync(query, 15)
+                .thenAccept(books -> {
+                    Platform.runLater(() -> {
+                        if (books.isEmpty()) {
+                            statusLabel.setText("Không tìm thấy sách phù hợp.");
+                            return;
+                        }
+
+                        // Lưu vào cache
+                        bookCache.put(query, books);
+
+                        // Hiển thị sách
+                        loadBooksToUI(books);
+
+                        // Cập nhật trạng thái
+                        statusLabel.setText("Dữ liệu đã được tải thành công.");
+                    });
+                })
+                .exceptionally(ex -> {
+                    // Xử lý lỗi
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Lỗi khi tải dữ liệu: " + ex.getMessage());
+                    });
+                    return null;
+                });
     }
 
-    private void updateBooks(String querry) {
+    private void loadBooksToUI(List<Book> books) {
+        // Xóa các sách cũ trong GridPane
+        caseBook.getChildren().clear();
         int column = 0;
         int row = 1;
-        bookCase = new ArrayList<>();
-        textField.setOnAction(event -> {
-            // Lấy giá trị từ textField
-            String query = textField.getText().trim();
-            textField.setText("");
-            // Gọi phương thức cập nhật sách với query vừa nhập
-            if (!query.isEmpty()) {
-                updateBooks(query);
-            }
-        });
-        bookCase = fetchBooksFromAPI(querry, 10);
-        setDataShowBook(bookCase.get(0));
-        caseBook.getChildren().clear();
 
+        // Hiển thị sách mới
         try {
-            for (Book book : bookCase) {
+            for (Book book : books) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("BookCase.fxml"));
                 VBox bookCaseBox = fxmlLoader.load();
+
+                // Gán dữ liệu cho từng sách
                 BookCaseController bookCaseController = fxmlLoader.getController();
                 bookCaseController.setData(book, myClicked);
                 bookCaseBox.setUserData(book);
+
+                // Thêm vào GridPane
                 if (column == 5) {
                     column = 0;
                     ++row;
@@ -215,9 +234,8 @@ public class BookController implements Initializable {
             System.out.println("Error loading FXML for bookcase: " + e.getMessage());
             e.printStackTrace();
         }
-        searchBar.setupSearchField(textField, viewList);
-
     }
+
 
     @FXML
     void backtoSearchBook(MouseEvent event) {
@@ -262,103 +280,115 @@ public class BookController implements Initializable {
         }
     }
 
+    private void searchBooksAndUpdateUI(String keyword, int maxResults, ListView<Book> bookListView, Label statusLabel) {
+        // Hiển thị trạng thái đang tải
+        statusLabel.setText("Đang tải dữ liệu...");
+
+        fetchBooksFromAPIAsync(keyword, maxResults)
+                .thenAccept(books -> {
+                    // Cập nhật giao diện trên JavaFX Application Thread
+                    Platform.runLater(() -> {
+                        // Hiển thị danh sách sách vào ListView
+                        bookListView.getItems().clear();
+                        bookListView.getItems().addAll(books);
+
+                        // Cập nhật trạng thái
+                        if (books.isEmpty()) {
+                            statusLabel.setText("Không tìm thấy kết quả.");
+                        } else {
+                            statusLabel.setText("Tìm thấy " + books.size() + " kết quả.");
+                        }
+                    });
+                })
+                .exceptionally(ex -> {
+                    // Xử lý lỗi và cập nhật giao diện
+                    Platform.runLater(() -> {
+                        statusLabel.setText("Có lỗi xảy ra: " + ex.getMessage());
+                    });
+                    return null;
+                });
+    }
+
+
     private static final String GOOGLE_BOOKS_API_BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
-    public List<Book> fetchBooksFromAPI(String keyword, int maxResults) {
+    private CompletableFuture<List<Book>> fetchBooksFromAPIAsync(String keyword, int maxResults) {
+        return CompletableFuture.supplyAsync(() -> {
+            List<Book> books = new ArrayList<>();
+            try {
+                String query = "?q=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8) + "&maxResults=" + maxResults;
+                URI uri = URI.create(GOOGLE_BOOKS_API_BASE_URL + query);
 
-        List<Book> books = new ArrayList<>();
-        try {
-            // Tạo URL truy vấn
-            String query = "?q=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8) + "&maxResults=" + maxResults;
-            URI uri = URI.create(GOOGLE_BOOKS_API_BASE_URL + query);
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                        .uri(uri)
+                        .GET()
+                        .build();
 
-            // Tạo HTTP client và gửi request
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(uri)
-                    .GET()
-                    .build();
+                HttpResponse<String> response = client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+                        .join();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                if (response.statusCode() == 200) {
+                    JSONObject jsonResponse = new JSONObject(response.body());
+                    JSONArray items = jsonResponse.optJSONArray("items");
 
-            if (response.statusCode() == 200) {
-                JSONObject jsonResponse = new JSONObject(response.body());
-                JSONArray items = jsonResponse.optJSONArray("items");
+                    if (items != null) {
+                        for (int i = 0; i < Math.min(maxResults, items.length()); i++) {
+                            JSONObject bookJson = items.getJSONObject(i);
+                            JSONObject volumeInfo = bookJson.optJSONObject("volumeInfo");
+                            JSONObject accessInfo = bookJson.optJSONObject("accessInfo");
 
-                if (items != null) {
-                    for (int i = 0; i < Math.min(maxResults, items.length()); i++) {
-                        JSONObject bookJson = items.getJSONObject(i);
-                        JSONObject volumeInfo = bookJson.optJSONObject("volumeInfo");
-                        JSONObject accessInfo = bookJson.optJSONObject("accessInfo");
+                            if (volumeInfo != null) {
+                                String id = bookJson.optString("id", "Unknown ID");
+                                String title = volumeInfo.optString("title", "Unknown Title");
+                                String authors = volumeInfo.optJSONArray("authors") != null
+                                        ? volumeInfo.optJSONArray("authors").join(", ").replace("\"", "")
+                                        : "Unknown Author";
+                                String publisher = volumeInfo.optString("publisher", "Unknown Publisher");
+                                String publishedDate = volumeInfo.optString("publishedDate", "Unknown Date");
+                                String language = volumeInfo.optString("language", "Unknown Language");
+                                int pageCount = volumeInfo.optInt("pageCount", 0);
+                                String printType = volumeInfo.optString("printType", "Unknown Print Type");
+                                String categories = volumeInfo.optJSONArray("categories") != null
+                                        ? volumeInfo.optJSONArray("categories").join(", ").replace("\"", "")
+                                        : "N/A";
+                                String description = volumeInfo.optString("description", "No description available.");
 
-                        if (volumeInfo != null) {
-                            String id = bookJson.optString("id", "Unknown ID");
-                            String title = volumeInfo.optString("title", "Unknown Title");
-                            String authors = volumeInfo.optJSONArray("authors") != null
-                                    ? volumeInfo.optJSONArray("authors").join(", ").replace("\"", "")
-                                    : "Unknown Author";
-                            String publisher = volumeInfo.optString("publisher", "Unknown Publisher");
-                            String publishedDate = volumeInfo.optString("publishedDate", "Unknown Date");
-                            String language = volumeInfo.optString("language", "Unknown Language");
-                            int pageCount = volumeInfo.optInt("pageCount", 0);
-                            String printType = volumeInfo.optString("printType", "Unknown Print Type");
-                            String categories = volumeInfo.optJSONArray("categories") != null
-                                    ? volumeInfo.optJSONArray("categories").join(", ").replace("\"", "")
-                                    : "N/A";
-                            String description = volumeInfo.optString("description", "No description available.");
-
-                            // Lấy image link
-                            String imageLink = "";
-                            JSONObject imageLinks = volumeInfo.optJSONObject("imageLinks");
-                            if (imageLinks != null) {
-                                imageLink = imageLinks.optString("thumbnail", "");
-                            }
-
-                            // Lấy preview link
-                            String previewLink = volumeInfo.optString("previewLink", "");
-
-                            // Lấy download link
-                            String downloadLink = "";
-                            if (accessInfo != null) {
-                                JSONObject pdfInfo = accessInfo.optJSONObject("pdf");
-                                if (pdfInfo != null) {
-                                    downloadLink = pdfInfo.optString("downloadLink", "");
+                                String imageLink = "";
+                                JSONObject imageLinks = volumeInfo.optJSONObject("imageLinks");
+                                if (imageLinks != null) {
+                                    imageLink = imageLinks.optString("thumbnail", "");
                                 }
-                            }
 
-                            // Tạo đối tượng Book và thêm vào danh sách
-                            Book book = new Book(
-                                    id,
-                                    title,
-                                    categories,
-                                    publisher,
-                                    publishedDate,
-                                    language,
-                                    pageCount,
-                                    printType,
-                                    authors,
-                                    imageLink,
-                                    downloadLink,
-                                    previewLink,
-                                    description,
-                                    pageCount / 6, // amount mặc định là 0
-                                    (double) pageCount / 4 // Giá mặc định
-                            );
-                            books.add(book);
+                                String previewLink = volumeInfo.optString("previewLink", "");
+                                String downloadLink = "";
+                                if (accessInfo != null) {
+                                    JSONObject pdfInfo = accessInfo.optJSONObject("pdf");
+                                    if (pdfInfo != null) {
+                                        downloadLink = pdfInfo.optString("downloadLink", "");
+                                    }
+                                }
+
+                                Book book = new Book(
+                                        id, title, categories, publisher, publishedDate, language, pageCount,
+                                        printType, authors, imageLink, downloadLink, previewLink, description,
+                                        pageCount / 6, (double) pageCount / 4
+                                );
+                                books.add(book);
+                            }
                         }
                     }
+                } else {
+                    System.err.println("Error fetching data: HTTP " + response.statusCode() + " - " + response.body());
                 }
-            } else {
-                System.err.println("Error fetching data: HTTP " + response.statusCode() + " - " + response.body());
+            } catch (Exception e) {
+                System.err.println("Error fetching data from Google Books API: " + e.getMessage());
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            System.err.println("Error fetching data from Google Books API: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-
-        return books;
+            return books;
+        });
     }
+
 
     private void supershowAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -375,7 +405,7 @@ public class BookController implements Initializable {
         textField.clear(); // Xóa textField sau khi tìm kiếm// Lấy giá trị nhập vào từ textField
         if (!query.isEmpty()) {
             querry.set(query);  // Cập nhật querry nếu có giá trị
-            updateBooks(query); // Gọi updateBooks để tải lại danh sách sách
+            updateBooksCF(query); // Gọi updateBooks để tải lại danh sách sách
         } else {
             supershowAlert("Input Error", "Please enter a search term.");
         }
@@ -434,7 +464,7 @@ public class BookController implements Initializable {
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             // Truyền tham số vào câu truy vấn
-            statement.setString(1,bookmark);
+            statement.setString(1, bookmark);
 
             // Thực hiện truy vấn
             ResultSet resultSet = statement.executeQuery();
@@ -457,8 +487,8 @@ public class BookController implements Initializable {
     public void addAmountBooktoLibrary(MouseEvent mouseEvent) {
         amount = Integer.parseInt(amountBook.getText());
         Connection connection = DatabaseConnection.getConnection();
-        addBookToDatabase(connection, recentlybook,amount);
-        showAlert(Alert.AlertType.INFORMATION,"Notice","Add Book to Library Successfully.");
+        addBookToDatabase(connection, recentlybook, amount);
+        showAlert(Alert.AlertType.INFORMATION, "Notice", "Add Book to Library Successfully.");
         amountBook.setText("");
         quantity_in_Stock_Book(recentlybook.getbookmark());
 
@@ -501,6 +531,7 @@ public class BookController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void gotoHome(MouseEvent event) {

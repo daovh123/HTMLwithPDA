@@ -9,10 +9,10 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="600.0" stylesheets="@../SmallThan.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.user.Member_Edit">
    <children>
+      <Button layoutX="517.0" layoutY="650.0" mnemonicParsing="false" onAction="#back" styleClass="button0" stylesheets="@../SmallThan.css" text="Cancel" />
       <TextField fx:id="info_firstname" layoutX="125.0" layoutY="36.0" prefHeight="30.0" prefWidth="340.0" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />
       <TextField fx:id="info_lastname" layoutX="125.0" layoutY="104.0" prefHeight="30.0" prefWidth="340.0" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />
       <Button layoutX="434.0" layoutY="650.0" mnemonicParsing="false" onAction="#save_update" prefHeight="30.0" prefWidth="58.0" styleClass="button0" stylesheets="@../SmallThan.css" text="Save" />
-      <Button layoutX="517.0" layoutY="650.0" mnemonicParsing="false" onAction="#back" styleClass="button0" stylesheets="@../SmallThan.css" text="Cancel" />
       <TextField fx:id="info_phone" layoutX="125.0" layoutY="431.0" prefHeight="30.0" prefWidth="340.0" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />
       <TextField fx:id="info_email" layoutX="127.0" layoutY="352.0" prefHeight="30.0" prefWidth="340.0" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />
       <TextField fx:id="info_birthday" layoutX="141.0" layoutY="268.0" prefHeight="30.0" prefWidth="340.0" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />

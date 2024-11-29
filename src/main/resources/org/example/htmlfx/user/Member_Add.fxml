@@ -9,6 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" stylesheets="@../SmallThan.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.htmlfx.user.Member_Add">
     <children>
+      <Button layoutX="516.0" layoutY="648.0" mnemonicParsing="false" onAction="#backToUsers" styleClass="button0" text="Cancel" />
           <Text layoutX="129.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="firstName">
          <font>
             <Font name="System Italic" size="16.0" />
@@ -46,7 +47,6 @@
       </Text>
       <TextField fx:id="phone" layoutX="125.0" layoutY="526.0" prefHeight="30.0" prefWidth="340.0" promptText="0xxxxxxxxx" styleClass="TextField0" stylesheets="@../SmallThan.css" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" />
         <Button layoutX="434.0" layoutY="648.0" mnemonicParsing="false" onAction="#addNewUser" prefHeight="30.0" prefWidth="58.0" styleClass="button0" stylesheets="@../SmallThan.css" text="Add" />
-      <Button layoutX="516.0" layoutY="648.0" mnemonicParsing="false" onAction="#backToUsers" styleClass="button0" text="Cancel" />
       <Text layoutX="65.0" layoutY="667.0" strokeType="OUTSIDE" strokeWidth="0.0" text="**If you click &quot;add&quot;, it means you must follow the library's rules">
          <font>
             <Font name="System Italic" size="13.0" />

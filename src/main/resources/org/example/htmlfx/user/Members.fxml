@@ -210,13 +210,13 @@
                            <children>
                               <Button layoutX="687.0" layoutY="6.0" onAction="#addMember" prefHeight="35.0" prefWidth="115.0" styleClass="button0" stylesheets="@../Makecolor.css" text="Add" />
                               <Button layoutX="857.0" layoutY="6.0" onAction="#deleteMember" prefHeight="35.0" prefWidth="115.0" styleClass="button1" stylesheets="@../Makecolor.css" text="Delete" />
-                              <TableView fx:id="tableView" layoutX="89.0" layoutY="70.0" prefHeight="567.0" prefWidth="893.0" styleClass="table" stylesheets="@../Makecolor.css">
+                              <TableView fx:id="tableView" layoutX="89.0" layoutY="70.0" prefHeight="567.0" prefWidth="890.0" styleClass="table" stylesheets="@../Makecolor.css">
                                  <columns>
-                                    <TableColumn fx:id="IDColumn" prefWidth="101.5999870300293" resizable="false" text="ID" />
-                                    <TableColumn fx:id="NameColumn" prefWidth="252.8000030517578" resizable="false" text="Name" />
-                                    <TableColumn fx:id="GenderColumn" prefWidth="91.20001220703125" resizable="false" text="Gender" />
-                                    <TableColumn fx:id="EmailColumn" prefWidth="287.19989013671875" resizable="false" text="Email" />
-                                    <TableColumn fx:id="PhoneColumn" prefWidth="146.6666259765625" resizable="false" text="Phone" />
+                                    <TableColumn fx:id="IDColumn" prefWidth="101.5999870300293" text="ID" />
+                                    <TableColumn fx:id="NameColumn" prefWidth="252.8000030517578" text="Name" />
+                                    <TableColumn fx:id="GenderColumn" prefWidth="91.20001220703125" text="Gender" />
+                                    <TableColumn fx:id="EmailColumn" prefWidth="287.19989013671875" text="Email" />
+                                    <TableColumn fx:id="PhoneColumn" prefWidth="154.79998779296875" text="Phone" />
                                  </columns>
                               </TableView>
                               <Text layoutX="89.0" layoutY="27.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="Information about member">

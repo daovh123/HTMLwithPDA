@@ -100,14 +100,19 @@
       </VBox>
       <Pane layoutX="200.0" prefHeight="720.0" prefWidth="1080.0" stylesheets="@../Makecolor.css">
          <children>
-            <Pane fx:id="pane2" layoutX="68.0" layoutY="34.0" prefHeight="652.0" prefWidth="934.0" styleClass="blue_background" stylesheets="@../Makecolor.css">
+            <Pane fx:id="pane2" layoutX="68.0" layoutY="34.0" prefHeight="652.0" prefWidth="934.0" styleClass="blue_background" stylesheets="@../Makecolor.css" visible="false">
                <children>
                   <Pane layoutX="36.0" layoutY="15.0" prefHeight="623.0" prefWidth="480.0" style="-fx-background-color: white; -fx-effect: none;" styleClass="blue_background" stylesheets="@../Makecolor.css">
                      <children>
                         <TextField fx:id="book_field" layoutX="100.0" layoutY="455.0" prefHeight="25.0" prefWidth="286.0" promptText="Book ID" styleClass="search_TextField" stylesheets="@../Makecolor.css" />
-                        <Text fx:id="bookname" layoutX="100.0" layoutY="510.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="285.99999999999994">
+                        <Text layoutX="100.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="65.99999999999989">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="bookname" layoutX="100.0" layoutY="532.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="285.99999999999994">
+                           <font>
+                              <Font size="18.0" />
                            </font>
                         </Text>
                         <VBox layoutX="100.0" layoutY="150.0" prefHeight="268.0" prefWidth="108.0" spacing="20.0">
@@ -146,32 +151,32 @@
                         </VBox>
                         <VBox layoutX="203.0" layoutY="150.0" prefHeight="244.0" prefWidth="268.0" spacing="20.0">
                            <children>
-                              <Text fx:id="info_id" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_id" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="info_name" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_name" strokeType="OUTSIDE" strokeWidth="0.0" text="name" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="info_gender" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_gender" strokeType="OUTSIDE" strokeWidth="0.0" text="gender" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="info_birthday" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_birthday" strokeType="OUTSIDE" strokeWidth="0.0" text="birth" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="info_email" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_email" strokeType="OUTSIDE" strokeWidth="0.0" text="email" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="info_phone" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="250.0">
+                              <Text fx:id="info_phone" strokeType="OUTSIDE" strokeWidth="0.0" text="phone" wrappingWidth="250.0">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -237,7 +242,7 @@
                   <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
                </padding>
             </Pane>
-            <Pane fx:id="pane1" layoutX="40.0" layoutY="37.0" prefHeight="661.0" prefWidth="1005.0" styleClass="white_background" stylesheets="@../Makecolor.css" visible="false">
+            <Pane fx:id="pane1" layoutX="40.0" layoutY="37.0" prefHeight="661.0" prefWidth="1005.0" styleClass="white_background" stylesheets="@../Makecolor.css">
                <children>
                   <TableView fx:id="table_of_borrow" layoutX="46.0" layoutY="112.0" prefHeight="483.0" prefWidth="914.0" styleClass="table" stylesheets="@../SmallThan.css">
                     <columns>

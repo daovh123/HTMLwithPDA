@@ -30,16 +30,28 @@ public class Admin_Edit implements ParentControllerAware {
     private TextField info_birthday;
 
     @FXML
+    private TextField info_email;
+
+    @FXML
+    private TextField info_firstname;
+
+    @FXML
     private ComboBox<String> info_gender;
+
+    @FXML
+    private TextField info_id;
 
     @FXML
     private TextField info_lastname;
 
     @FXML
-    private TextField info_phone;
+    private TextField info_nickname;
 
     @FXML
-    private TextField info_firstname;
+    private TextField info_password;
+
+    @FXML
+    private TextField info_phone;
 
     private Admin edittingAdmin;
 
@@ -47,12 +59,19 @@ public class Admin_Edit implements ParentControllerAware {
         edittingAdmin = SceneController.getAdmin();
 
         info_gender.getItems().addAll("Male", "Female", "Other");
-
         info_birthday.setText(edittingAdmin.getBirthday());
         info_gender.setValue(edittingAdmin.getGender());
         info_phone.setText(edittingAdmin.getPhone());
         info_firstname.setText(edittingAdmin.getFirstname());
         info_lastname.setText(edittingAdmin.getLastname());
+        info_id.setText(edittingAdmin.getId());
+        info_password.setText(edittingAdmin.getPassword());
+        info_email.setText(edittingAdmin.getEmail());
+        info_nickname.setText(edittingAdmin.getAdmin_name());
+
+        info_email.setEditable(false);
+        info_id.setEditable(false);
+        info_nickname.setEditable(false);
     }
 
     @FXML
@@ -60,10 +79,11 @@ public class Admin_Edit implements ParentControllerAware {
         String email = edittingAdmin.getEmail();
 
         if (info_birthday.getText().isEmpty()
-                || info_gender.getValue().isEmpty()
-                || info_phone.getText().isEmpty()
-                || info_firstname.getText().isEmpty()
-                || info_lastname.getText().isEmpty()) {
+            || info_gender.getValue().isEmpty()
+            || info_phone.getText().isEmpty()
+            || info_firstname.getText().isEmpty()
+            || info_lastname.getText().isEmpty()
+            || info_phone.getText().isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Warning", "All fields must be filled.");
             return;
         }
@@ -79,7 +99,7 @@ public class Admin_Edit implements ParentControllerAware {
         }
 
         String updateAdminSQL = "UPDATE Admins " +
-                "SET firstname = ?, lastname = ?, gender = ?, birth = ?, phone = ? " +
+                "SET firstname = ?, lastname = ?, gender = ?, birth = ?, phone = ? , password = ?" +
                 "WHERE email = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -91,13 +111,15 @@ public class Admin_Edit implements ParentControllerAware {
             String newGender = info_gender.getValue();
             String newBirthday = info_birthday.getText();
             String newPhone = info_phone.getText();
+            String newPassword = info_password.getText();
 
             updateAdminStatement.setString(1, newFirstname);
             updateAdminStatement.setString(2, newLastname);
             updateAdminStatement.setString(3, newGender);
             updateAdminStatement.setString(4, newBirthday);
             updateAdminStatement.setString(5, newPhone);
-            updateAdminStatement.setString(6, email);
+            updateAdminStatement.setString(6, newPassword);
+            updateAdminStatement.setString(7, email);
 
             int rowsAffected = updateAdminStatement.executeUpdate();
             if (rowsAffected > 0) {
@@ -110,7 +132,7 @@ public class Admin_Edit implements ParentControllerAware {
             }
 
             // Đóng cửa sổ hiện tại
-            Stage stage = (Stage) info_gender.getScene().getWindow();
+            Stage stage = (Stage) info_email.getScene().getWindow();
             stage.close();
 
             // Cập nhật TableView trên giao diện cha nếu có
@@ -123,7 +145,7 @@ public class Admin_Edit implements ParentControllerAware {
 
     @FXML
     void back(ActionEvent event) {
-        Stage stage = (Stage) info_birthday.getScene().getWindow();
+        Stage stage = (Stage) info_email.getScene().getWindow();
         stage.close();
     }
 
